@@ -16,15 +16,16 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
     }
 
     header {
       padding-top: 6vh;
+      text-align: center;
       padding-left: 5vw;
       padding-right: 5vw;
-      text-align: center;
     }
 
     h1 {
@@ -38,18 +39,43 @@
       justify-content: center;
       gap: 5vw;
       font-size: 9vw;
-      flex-wrap: nowrap;
+      margin-bottom: 2rem;
     }
 
     .stars a {
       text-decoration: none;
       color: #fff;
-      transition: transform 0.3s ease, color 0.3s ease;
+      opacity: 0;
+      animation: appear 0.3s ease forwards;
+      position: relative;
     }
 
-    .stars a:hover {
-      transform: scale(1.2);
-      color: gold;
+    .stars a:nth-child(1) { animation-delay: 0.3s; }
+    .stars a:nth-child(2) { animation-delay: 0.6s; }
+    .stars a:nth-child(3) { animation-delay: 0.9s; }
+    .stars a:nth-child(4) { animation-delay: 1.2s; }
+    .stars a:nth-child(5) { animation-delay: 1.5s; }
+
+    @keyframes appear {
+      to { opacity: 1; }
+    }
+
+    .stars a:nth-child(5)::after {
+      content: '';
+      position: absolute;
+      animation: sparkle 1s ease 2.1s 2;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { color: #fff; }
+      50% { color: gold; }
+    }
+
+    footer {
+      padding: 6vh 5vw;
+      text-align: center;
+      font-size: 4vw;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -57,12 +83,17 @@
   <header>
     <h1>Give us feedback<br>about your vacation</h1>
     <div class="stars">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGW83uIdFdo5uwlcXTYQOghOo-vrbYpRvCRIEhd8kEwxTuxQ/viewform?usp=sharing&ouid=100868254716718426796" target="_blank" aria-label="1 star">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSftLtFscEMApH5uSQAgE-78d-wSF445Rpm9EiKegC3XxTcSug/viewform?usp=sharing&ouid=100868254716718426796" target="_blank" aria-label="2 stars">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmQ3gegeZ6fG8cXNbMfg9JBy8JKdlwtzrgZoH-Y3O5M38pAA/viewform?usp=sharing&ouid=100868254716718426796" target="_blank" aria-label="3 stars">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZjvDPfQZyIir2IkE9Cs4McqdrcItiDH7J7DqOTLnEiaIyjw/viewform?usp=sharing&ouid=100868254716718426796" target="_blank" aria-label="4 stars">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScfhowwoqO84fsB_LMdWLcxrQo0um5qOqFKkbq7EBcM4B_dJw/viewform?usp=dialog" target="_blank" aria-label="5 stars">★</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGW83uIdFdo5uwlcXTYQOghOo-vrbYpRvCRIEhd8kEwxTuxQ/viewform" target="_blank" aria-label="1 star">★</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSftLtFscEMApH5uSQAgE-78d-wSF445Rpm9EiKegC3XxTcSug/viewform" target="_blank" aria-label="2 stars">★</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmQ3gegeZ6fG8cXNbMfg9JBy8JKdlwtzrgZoH-Y3O5M38pAA/viewform" target="_blank" aria-label="3 stars">★</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZjvDPfQZyIir2IkE9Cs4McqdrcItiDH7J7DqOTLnEiaIyjw/viewform" target="_blank" aria-label="4 stars">★</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGAM3qJvjkWeTsV_FiWvAr3G0duy3vrQFWxDEReIlK2rfpQw/viewform" target="_blank" aria-label="5 stars">★</a>
     </div>
   </header>
+  <footer>
+    Thank you for being part of the Pickalbatros story.<br>
+    Your thoughts help us turn hospitality into something truly special.<br>
+    Leave us a few words — and we’ll welcome you even better next time.
+  </footer>
 </body>
 </html>
