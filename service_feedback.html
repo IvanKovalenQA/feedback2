@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Service Feedback</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fefcf9;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2261c4;
+    }
+    h3 {
+      margin-top: 30px;
+      color: #104b93;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #4285f4;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Hotel Service Feedback</h2>
+    <form id="feedbackForm">
+      <label for="room">Room Number (4 digits starting with 4 or 5) <span style="color: red;">*</span></label>
+      <input type="number" id="room" name="room" required pattern="[4-5][0-9]{3}" min="4000" max="5999">
+
+      <h3>Main Restaurant (Culina)</h3>
+
+    <label for="breakfast">Breakfast</label>
+    <select id="breakfast" name="breakfast">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="lunch">Lunch</label>
+    <select id="lunch" name="lunch">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="dinner">Dinner</label>
+    <select id="dinner" name="dinner">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="service">Service</label>
+    <select id="service" name="service">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>L’Asiatique</h3>
+
+    <label for="dinner">Dinner</label>
+    <select id="dinner" name="dinner">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="service">Service</label>
+    <select id="service" name="service">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>Italian & Colonies A-la carte</h3>
+
+    <label for="dinner">Dinner</label>
+    <select id="dinner" name="dinner">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="service">Service</label>
+    <select id="service" name="service">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>Snacks</h3>
+
+    <label for="food_court_near_pirates_aquapark">Food Court (near Pirates aquapark)</label>
+    <select id="food_court_near_pirates_aquapark" name="food_court_near_pirates_aquapark">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="beach_bar">Beach Bar</label>
+    <select id="beach_bar" name="beach_bar">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>Service</h3>
+
+    <label for="columbus_bar">Columbus Bar</label>
+    <select id="columbus_bar" name="columbus_bar">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="olympus_bar">Olympus Bar</label>
+    <select id="olympus_bar" name="olympus_bar">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="sport_bar">Sport Bar</label>
+    <select id="sport_bar" name="sport_bar">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="reception">Reception</label>
+    <select id="reception" name="reception">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="luggage_delivery">Luggage Delivery</label>
+    <select id="luggage_delivery" name="luggage_delivery">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="guest_relation">Guest Relation</label>
+    <select id="guest_relation" name="guest_relation">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>Cleanliness / Housekeeping</h3>
+
+    <label for="room">Room</label>
+    <select id="room" name="room">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="hotel">Hotel</label>
+    <select id="hotel" name="hotel">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="beach">Beach</label>
+    <select id="beach" name="beach">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    <h3>Animation</h3>
+
+    <label for="day_program">Day Program</label>
+    <select id="day_program" name="day_program">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="evening_show">Evening Show</label>
+    <select id="evening_show" name="evening_show">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+    <label for="kids_animation">Kids Animation</label>
+    <select id="kids_animation" name="kids_animation">
+      <option value="">Select...</option>
+      <option value="Very good">Very good</option>
+      <option value="Good">Good</option>
+      <option value="Satisfied">Satisfied</option>
+      <option value="Dissatisfied">Dissatisfied</option>
+    </select>
+    
+
+      <button type="submit">Submit</button>
+      <div class="message" id="formMessage"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const messageDiv = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        Room: document.getElementById('room').value,
+        "Breakfast": document.getElementById("breakfast").value,
+        "Lunch": document.getElementById("lunch").value,
+        "Dinner": document.getElementById("dinner").value,
+        "Service": document.getElementById("service").value,
+        "Dinner": document.getElementById("dinner").value,
+        "Service": document.getElementById("service").value,
+        "Dinner": document.getElementById("dinner").value,
+        "Service": document.getElementById("service").value,
+        "Food Court (near Pirates aquapark)": document.getElementById("food_court_near_pirates_aquapark").value,
+        "Beach Bar": document.getElementById("beach_bar").value,
+        "Columbus Bar": document.getElementById("columbus_bar").value,
+        "Olympus Bar": document.getElementById("olympus_bar").value,
+        "Sport Bar": document.getElementById("sport_bar").value,
+        "Reception": document.getElementById("reception").value,
+        "Luggage Delivery": document.getElementById("luggage_delivery").value,
+        "Guest Relation": document.getElementById("guest_relation").value,
+        "Room": document.getElementById("room").value,
+        "Hotel": document.getElementById("hotel").value,
+        "Beach": document.getElementById("beach").value,
+        "Day Program": document.getElementById("day_program").value,
+        "Evening Show": document.getElementById("evening_show").value,
+        "Kids Animation": document.getElementById("kids_animation").value,
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzUfuTS5lQrnqfLdpbWPVhkW1DwYVVIjfoLlzZOa240QYe7CaYETTzcqTzlMTbfKLoN/exec", {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      }).then(() => {
+        form.reset();
+        messageDiv.textContent = "Thank you for your feedback!";
+        messageDiv.className = "message success";
+      }).catch(() => {
+        messageDiv.textContent = "Submission failed. Please try again.";
+        messageDiv.className = "message error";
+      });
+    }});
+  </script>
+</body>
+</html>
