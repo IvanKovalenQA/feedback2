@@ -9,20 +9,23 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #fefcf9;
+      background: url('pickalbatros_blue_background_full.png') no-repeat center center;
+      background-size: cover;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #3a7fc0;
+      color: #fff;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      min-height: 100vh;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
     }
 
     header {
       padding-top: 6vh;
-      text-align: center;
       padding-left: 5vw;
       padding-right: 5vw;
+      text-align: center;
     }
 
     h1 {
@@ -36,12 +39,12 @@
       justify-content: center;
       gap: 5vw;
       font-size: 9vw;
-      margin-bottom: 4vh;
+      margin-bottom: 52vh;
     }
 
     .stars a {
       text-decoration: none;
-      color: #3a7fc0;
+      color: #fff;
       opacity: 0;
       animation: appear 0.3s ease forwards;
       position: relative;
@@ -64,23 +67,17 @@
     }
 
     @keyframes sparkle {
-      0%, 100% { color: #3a7fc0; }
-      50% { color: #5faeff; }
-    }
-
-    .logo {
-      width: 80vw;
-      max-width: 400px;
-      margin: 2vh 0 2vh;
+      0%, 100% { color: #fff; }
+      50% { color: gold; }
     }
 
     footer {
-      margin-top: 2vh;
-      margin-bottom: 6vh;
-      padding: 0 5vw;
+      padding: 4vh 5vw;
       text-align: center;
       font-size: 4vw;
       line-height: 1.5;
+      background: rgba(0,0,0,0.15);
+      width: 100%;
     }
   </style>
 </head>
@@ -95,9 +92,6 @@
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGAM3qJvjkWeTsV_FiWvAr3G0duy3vrQFWxDEReIlK2rfpQw/viewform" target="_blank" aria-label="5 stars">★</a>
     </div>
   </header>
-
-  <img src="pickalbatros_white_bg_full.png" alt="Pickalbatros Logo" class="logo">
-
   <footer>
     Thank you for being part of the Pickalbatros story.<br>
     Your thoughts help us turn hospitality into something truly special.<br>
