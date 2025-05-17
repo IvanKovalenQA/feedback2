@@ -15,8 +15,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     header {
@@ -91,7 +90,6 @@
     }
 
     footer {
-      font-family: 'Segoe UI', sans-serif;
       font-style: italic;
       font-size: 4vw;
       padding: 0 6vw;
@@ -99,6 +97,78 @@
       line-height: 1.5;
       color: #3a7fc0;
       text-shadow: 1px 1px 2px rgba(150, 180, 255, 0.4);
+      margin-bottom: 4vh;
+    }
+
+    .form-container {
+      max-width: 500px;
+      width: 90vw;
+      background-color: #fff;
+      color: #333;
+      padding: 20px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .required-star {
+      color: red;
+    }
+
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #4285f4;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .footnote {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #888;
+      text-align: center;
     }
   </style>
 </head>
@@ -106,11 +176,7 @@
   <header>
     <h1>Give us feedback<br>about your vacation</h1>
     <div class="stars">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGW83uIdFdo5uwlcXTYQOghOo-vrbYpRvCRIEhd8kEwxTuxQ/viewform">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSftLtFscEMApH5uSQAgE-78d-wSF445Rpm9EiKegC3XxTcSug/viewform">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmQ3gegeZ6fG8cXNbMfg9JBy8JKdlwtzrgZoH-Y3O5M38pAA/viewform">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZjvDPfQZyIir2IkE9Cs4McqdrcItiDH7J7DqOTLnEiaIyjw/viewform">★</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGAM3qJvjkWeTsV_FiWvAr3G0duy3vrQFWxDEReIlK2rfpQw/viewform">★</a>
+      <a href="#">★</a><a href="#">★</a><a href="#">★</a><a href="#">★</a><a href="#">★</a>
     </div>
   </header>
 
@@ -121,5 +187,57 @@
     Your thoughts help us make every stay even more special.<br>
     Just a few words from you can help us grow and improve.
   </footer>
+
+  <div class="form-container">
+    <form id="feedbackForm">
+      <label for="room">Room Number (3 digits):<span class="required-star">*</span></label>
+      <input type="number" id="room" name="room" required min="100" max="999">
+
+      <label for="rating">Rating (1-10):<span class="required-star">*</span></label>
+      <select id="rating" name="rating" required>
+        <option value="">Select...</option>
+        <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+        <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+
+      <label for="comment">Additional comments (optional):</label>
+      <textarea id="comment" name="comment"></textarea>
+
+      <button type="submit">Submit</button>
+      <div class="message" id="formMessage"></div>
+      <div class="footnote"><span class="required-star">*</span> - required fields</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const messageDiv = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = {
+        Room: document.getElementById('room').value,
+        Rating: document.getElementById('rating').value,
+        Comment: document.getElementById('comment').value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzUfuTS5lQrnqfLdpbWPVhkW1DwYVVIjfoLlzZOa240QYe7CaYETTzcqTzlMTbfKLoN/exec", {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      }).then(() => {
+        form.reset();
+        messageDiv.textContent = "Thank you for your feedback!";
+        messageDiv.className = "message success";
+      }).catch(() => {
+        messageDiv.textContent = "Submission failed. Please try again.";
+        messageDiv.className = "message error";
+      });
+    });
+  </script>
 </body>
 </html>
