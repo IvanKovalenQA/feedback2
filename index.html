@@ -64,9 +64,9 @@
     <img src="promka.png" alt="Promka_Logo" class="logo">
     <h2>Регистрация въезда/выезда</h2>
     <form id="carForm">
-      <label for="plate">Номер машины (3 цифры):</label>
+      <label for="plate">Номер авто</label>
       <input type="text" id="plate" name="plate" pattern="\d{3}" placeholder="например: 123" required>
-      <button type="submit">Отправить</button>
+      <button type="submit">Записать</button>
       <div id="formMessage" class="message"></div>
     </form>
   </div>
@@ -85,7 +85,7 @@
           body: formData
         });
         form.reset();
-        messageDiv.textContent = "Успешно зарегистрировано!";
+        messageDiv.textContent = "Занесено в таблицу!";
         messageDiv.className = "message success";
       } catch (error) {
         messageDiv.textContent = "Ошибка соединения. Повторите позже.";
