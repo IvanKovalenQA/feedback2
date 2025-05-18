@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Car Entry Log</title>
+  <title>Запись машин</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
@@ -74,9 +74,9 @@
 </head>
 <body>
   <div class="container">
-    <h2>Enter Car Number</h2>
+    <h2>Номер машины</h2>
     <form id="carForm">
-      <label for="carNumber">Last 3 digits of license plate:</label>
+      <label for="carNumber">3 цифры номера</label>
       <input type="text" id="carNumber" name="carNumber" pattern="\d{3}" maxlength="3" required />
       <button type="submit">Submit</button>
       <div id="formMessage" class="message"></div>
