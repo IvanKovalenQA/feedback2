@@ -1,85 +1,72 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Запись машин</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Регистрация въезда/выезда</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #fefcf9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
+      padding: 20px;
     }
-
     .container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 90%;
       max-width: 400px;
-    }
-
-    h2 {
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
+    }
+    h2 {
       color: #1a73e8;
-      margin-bottom: 20px;
     }
-
     label {
-      display: block;
-      margin-bottom: 8px;
       font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+      text-align: left;
     }
-
     input[type="text"] {
       width: 100%;
       padding: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-
     button {
-      width: 100%;
-      background-color: #1a73e8;
+      background-color: #4285f4;
       color: white;
       padding: 12px;
-      font-size: 16px;
       border: none;
+      width: 100%;
       border-radius: 4px;
-      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
     }
-
     .message {
-      margin-top: 15px;
       text-align: center;
+      margin-top: 15px;
       font-weight: bold;
     }
-
-    .success {
-      color: green;
-    }
-
-    .error {
-      color: red;
+    .success { color: green; }
+    .error { color: red; }
+    .logo {
+      height: 40px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div class="container">
- <img src="/Users/ivankoval/Documents/GitHub/feedback2/promka.png" alt="Промэлектросеть" class="logo" />
-    <h2>Номер машины</h2>
+    <img src="promka.png" alt="Promka_Logo" class="logo">
+    <h2>Регистрация въезда/выезда</h2>
     <form id="carForm">
-      <label for="carNumber">3 цифры номера</label>
-      <input type="text" id="carNumber" name="carNumber" pattern="\d{3}" maxlength="3" required />
-      <button type="submit">Submit</button>
+      <label for="plate">Номер машины (3 цифры):</label>
+      <input type="text" id="plate" name="plate" pattern="\d{3}" placeholder="например: 123" required>
+      <button type="submit">Отправить</button>
       <div id="formMessage" class="message"></div>
     </form>
   </div>
@@ -87,29 +74,22 @@
   <script>
     document.getElementById("carForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-      const carNumber = document.getElementById("carNumber").value;
-      const formMessage = document.getElementById("formMessage");
-
-      const data = {
-        carNumber: carNumber
-      };
+      const form = e.target;
+      const messageDiv = document.getElementById("formMessage");
+      const formData = new URLSearchParams();
+      formData.append("plate", form.plate.value);
 
       try {
-        await fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+        await fetch("https://script.google.com/macros/s/AKfycbzM9Zy94JCzYGqyyM36wtHY6KcxLuQ6UNFIIcq9ncRltaoSOQFlA50dNJSbkcsU5Qypmg/exec", {
           method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
+          body: formData
         });
-
-        formMessage.textContent = "Submitted!";
-        formMessage.className = "message success";
-        this.reset();
+        form.reset();
+        messageDiv.textContent = "Успешно зарегистрировано!";
+        messageDiv.className = "message success";
       } catch (error) {
-        formMessage.textContent = "Submission failed.";
-        formMessage.className = "message error";
+        messageDiv.textContent = "Ошибка соединения. Повторите позже.";
+        messageDiv.className = "message error";
       }
     });
   </script>
