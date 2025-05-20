@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <title>Feedback &amp; Survey</title>
@@ -118,136 +117,11 @@
     .success { color: green; }
     .error { color: red; }
   </style>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #fefcf9;
-    color: #222; /* Чёрный цвет текста */
-    padding: 20px;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.08);
-  }
-
-  label {
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 30px;
-    margin-bottom: 8px;
-    display: block;
-    color: #111;
-  }
-
-  .rating-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin: 6px 0 20px;
-    padding-left: 5px;
-  }
-
-  .rating-group label {
-    font-weight: normal;
-    min-width: 120px;
-    white-space: nowrap;
-  }
-
-  input[type="text"], input[type="email"], textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 15px;
-    margin-top: 4px;
-    margin-bottom: 18px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-  }
-
-  textarea {
-    height: 60px;
-    resize: vertical;
-  }
-
-  button {
-    margin-top: 25px;
-    padding: 14px 24px;
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #145acc;
-  }
-
-  .message {
-    margin-top: 15px;
-    font-weight: bold;
-  }
-
-  @media screen and (max-width: 600px) {
-    .rating-group {
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .rating-group label {
-      min-width: auto;
-    }
-  }
-</style><link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap" rel="stylesheet"/><style>
-label.section-title {
-  font-family: 'Pacifico', cursive;
-  font-size: 22px;
-  color: #111;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
-  margin-bottom: 6px;
-}
-</style><style>
-  body {
-    font-style: italic;
-  }
-
-  .rating-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 6px;
-    margin-bottom: 20px;
-    padding-left: 5px;
-  }
-
-  .rating-group label {
-    min-width: auto;
-    white-space: nowrap;
-    font-style: italic;
-  }
-
-  label, input, textarea, button {
-    font-style: italic !important;
-  }
-
-  .container label.section-title {
-    font-style: normal; /* оставим рукописный как есть */
-  }
-
-  header h1, header h2, header h3 {
-    font-style: italic;
-  }
-</style></head><body><div class="stars">
+</head><body><div class="stars">
 <a href="#">★</a><a href="#">★</a><a href="#">★</a><a href="#">★</a><a href="#">★</a>
 </div><header>
-<h1 style="; font-style: italic;">Give us feedback<br/>about your vacation</h1>
+<h1>Give us feedback<br/>about your vacation</h1>
+
 </header><img alt="Pickalbatros Logo" class="logo" src="pickalbatros_logo_transparent.png"/><div class="container">
 <h2>Pickalbatros Feedback Form</h2>
 <form id="feedbackForm">
@@ -255,7 +129,7 @@ label.section-title {
 <input name="Room" pattern="[4-5][0-9]{3}" required="" type="text"/>
 <label>Email:</label>
 <input name="Email" required="" type="email"/>
-<label class="section-title">Breakfast</label>
+<label>Breakfast</label>
 <div class="rating-group">
 <label><input name="Breakfast" onchange="toggleComment('Breakfast', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Breakfast" onchange="toggleComment('Breakfast', this.value)" type="radio" value="4"/> Good</label>
@@ -265,7 +139,7 @@ label.section-title {
 <div id="Breakfast_comment_container" style="display:none;">
 <textarea id="Breakfast_Comment" maxlength="250" name="Breakfast_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Lunch</label>
+<label>Lunch</label>
 <div class="rating-group">
 <label><input name="Lunch" onchange="toggleComment('Lunch', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Lunch" onchange="toggleComment('Lunch', this.value)" type="radio" value="4"/> Good</label>
@@ -275,7 +149,7 @@ label.section-title {
 <div id="Lunch_comment_container" style="display:none;">
 <textarea id="Lunch_Comment" maxlength="250" name="Lunch_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Dinner</label>
+<label>Dinner</label>
 <div class="rating-group">
 <label><input name="Dinner" onchange="toggleComment('Dinner', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Dinner" onchange="toggleComment('Dinner', this.value)" type="radio" value="4"/> Good</label>
@@ -285,7 +159,7 @@ label.section-title {
 <div id="Dinner_comment_container" style="display:none;">
 <textarea id="Dinner_Comment" maxlength="250" name="Dinner_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Service</label>
+<label>Service</label>
 <div class="rating-group">
 <label><input name="Service" onchange="toggleComment('Service', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Service" onchange="toggleComment('Service', this.value)" type="radio" value="4"/> Good</label>
@@ -295,7 +169,7 @@ label.section-title {
 <div id="Service_comment_container" style="display:none;">
 <textarea id="Service_Comment" maxlength="250" name="Service_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Dinner L’Asiatique</label>
+<label>Dinner L’Asiatique</label>
 <div class="rating-group">
 <label><input name="Dinner_LAsiatique" onchange="toggleComment('Dinner_LAsiatique', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Dinner_LAsiatique" onchange="toggleComment('Dinner_LAsiatique', this.value)" type="radio" value="4"/> Good</label>
@@ -305,7 +179,7 @@ label.section-title {
 <div id="Dinner_LAsiatique_comment_container" style="display:none;">
 <textarea id="Dinner_LAsiatique_Comment" maxlength="250" name="Dinner_LAsiatique_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Service L’Asiatique</label>
+<label>Service L’Asiatique</label>
 <div class="rating-group">
 <label><input name="Service_LAsiatique" onchange="toggleComment('Service_LAsiatique', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Service_LAsiatique" onchange="toggleComment('Service_LAsiatique', this.value)" type="radio" value="4"/> Good</label>
@@ -315,7 +189,7 @@ label.section-title {
 <div id="Service_LAsiatique_comment_container" style="display:none;">
 <textarea id="Service_LAsiatique_Comment" maxlength="250" name="Service_LAsiatique_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Dinner ItalianColonies A-la carte</label>
+<label>Dinner ItalianColonies A-la carte</label>
 <div class="rating-group">
 <label><input name="Dinner_ItalianColonies" onchange="toggleComment('Dinner_ItalianColonies', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Dinner_ItalianColonies" onchange="toggleComment('Dinner_ItalianColonies', this.value)" type="radio" value="4"/> Good</label>
@@ -325,7 +199,7 @@ label.section-title {
 <div id="Dinner_ItalianColonies_comment_container" style="display:none;">
 <textarea id="Dinner_ItalianColonies_Comment" maxlength="250" name="Dinner_ItalianColonies_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Service ItalianColonies A-la carte</label>
+<label>Service ItalianColonies A-la carte</label>
 <div class="rating-group">
 <label><input name="Service_ItalianColonies" onchange="toggleComment('Service_ItalianColonies', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Service_ItalianColonies" onchange="toggleComment('Service_ItalianColonies', this.value)" type="radio" value="4"/> Good</label>
@@ -335,7 +209,7 @@ label.section-title {
 <div id="Service_ItalianColonies_comment_container" style="display:none;">
 <textarea id="Service_ItalianColonies_Comment" maxlength="250" name="Service_ItalianColonies_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">FoodCourt</label>
+<label>FoodCourt</label>
 <div class="rating-group">
 <label><input name="FoodCourt" onchange="toggleComment('FoodCourt', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="FoodCourt" onchange="toggleComment('FoodCourt', this.value)" type="radio" value="4"/> Good</label>
@@ -345,7 +219,7 @@ label.section-title {
 <div id="FoodCourt_comment_container" style="display:none;">
 <textarea id="FoodCourt_Comment" maxlength="250" name="FoodCourt_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">BeachBar</label>
+<label>BeachBar</label>
 <div class="rating-group">
 <label><input name="BeachBar" onchange="toggleComment('BeachBar', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="BeachBar" onchange="toggleComment('BeachBar', this.value)" type="radio" value="4"/> Good</label>
@@ -355,7 +229,7 @@ label.section-title {
 <div id="BeachBar_comment_container" style="display:none;">
 <textarea id="BeachBar_Comment" maxlength="250" name="BeachBar_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">ColumbusBar</label>
+<label>ColumbusBar</label>
 <div class="rating-group">
 <label><input name="ColumbusBar" onchange="toggleComment('ColumbusBar', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="ColumbusBar" onchange="toggleComment('ColumbusBar', this.value)" type="radio" value="4"/> Good</label>
@@ -365,7 +239,7 @@ label.section-title {
 <div id="ColumbusBar_comment_container" style="display:none;">
 <textarea id="ColumbusBar_Comment" maxlength="250" name="ColumbusBar_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">OlympusBar</label>
+<label>OlympusBar</label>
 <div class="rating-group">
 <label><input name="OlympusBar" onchange="toggleComment('OlympusBar', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="OlympusBar" onchange="toggleComment('OlympusBar', this.value)" type="radio" value="4"/> Good</label>
@@ -375,7 +249,7 @@ label.section-title {
 <div id="OlympusBar_comment_container" style="display:none;">
 <textarea id="OlympusBar_Comment" maxlength="250" name="OlympusBar_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">SportBar</label>
+<label>SportBar</label>
 <div class="rating-group">
 <label><input name="SportBar" onchange="toggleComment('SportBar', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="SportBar" onchange="toggleComment('SportBar', this.value)" type="radio" value="4"/> Good</label>
@@ -385,7 +259,7 @@ label.section-title {
 <div id="SportBar_comment_container" style="display:none;">
 <textarea id="SportBar_Comment" maxlength="250" name="SportBar_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Reception</label>
+<label>Reception</label>
 <div class="rating-group">
 <label><input name="Reception" onchange="toggleComment('Reception', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Reception" onchange="toggleComment('Reception', this.value)" type="radio" value="4"/> Good</label>
@@ -395,7 +269,7 @@ label.section-title {
 <div id="Reception_comment_container" style="display:none;">
 <textarea id="Reception_Comment" maxlength="250" name="Reception_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">Luggage</label>
+<label>Luggage</label>
 <div class="rating-group">
 <label><input name="Luggage" onchange="toggleComment('Luggage', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="Luggage" onchange="toggleComment('Luggage', this.value)" type="radio" value="4"/> Good</label>
@@ -405,7 +279,7 @@ label.section-title {
 <div id="Luggage_comment_container" style="display:none;">
 <textarea id="Luggage_Comment" maxlength="250" name="Luggage_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">GuestRelation</label>
+<label>GuestRelation</label>
 <div class="rating-group">
 <label><input name="GuestRelation" onchange="toggleComment('GuestRelation', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="GuestRelation" onchange="toggleComment('GuestRelation', this.value)" type="radio" value="4"/> Good</label>
@@ -415,7 +289,7 @@ label.section-title {
 <div id="GuestRelation_comment_container" style="display:none;">
 <textarea id="GuestRelation_Comment" maxlength="250" name="GuestRelation_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">CleanRoom</label>
+<label>CleanRoom</label>
 <div class="rating-group">
 <label><input name="CleanRoom" onchange="toggleComment('CleanRoom', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="CleanRoom" onchange="toggleComment('CleanRoom', this.value)" type="radio" value="4"/> Good</label>
@@ -425,7 +299,7 @@ label.section-title {
 <div id="CleanRoom_comment_container" style="display:none;">
 <textarea id="CleanRoom_Comment" maxlength="250" name="CleanRoom_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">CleanHotel</label>
+<label>CleanHotel</label>
 <div class="rating-group">
 <label><input name="CleanHotel" onchange="toggleComment('CleanHotel', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="CleanHotel" onchange="toggleComment('CleanHotel', this.value)" type="radio" value="4"/> Good</label>
@@ -435,7 +309,7 @@ label.section-title {
 <div id="CleanHotel_comment_container" style="display:none;">
 <textarea id="CleanHotel_Comment" maxlength="250" name="CleanHotel_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">CleanBeach</label>
+<label>CleanBeach</label>
 <div class="rating-group">
 <label><input name="CleanBeach" onchange="toggleComment('CleanBeach', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="CleanBeach" onchange="toggleComment('CleanBeach', this.value)" type="radio" value="4"/> Good</label>
@@ -445,7 +319,7 @@ label.section-title {
 <div id="CleanBeach_comment_container" style="display:none;">
 <textarea id="CleanBeach_Comment" maxlength="250" name="CleanBeach_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">DayProgram</label>
+<label>DayProgram</label>
 <div class="rating-group">
 <label><input name="DayProgram" onchange="toggleComment('DayProgram', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="DayProgram" onchange="toggleComment('DayProgram', this.value)" type="radio" value="4"/> Good</label>
@@ -455,7 +329,7 @@ label.section-title {
 <div id="DayProgram_comment_container" style="display:none;">
 <textarea id="DayProgram_Comment" maxlength="250" name="DayProgram_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">EveningShow</label>
+<label>EveningShow</label>
 <div class="rating-group">
 <label><input name="EveningShow" onchange="toggleComment('EveningShow', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="EveningShow" onchange="toggleComment('EveningShow', this.value)" type="radio" value="4"/> Good</label>
@@ -465,7 +339,7 @@ label.section-title {
 <div id="EveningShow_comment_container" style="display:none;">
 <textarea id="EveningShow_Comment" maxlength="250" name="EveningShow_Comment" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
 </div>
-<label class="section-title">KidsAnimation</label>
+<label>KidsAnimation</label>
 <div class="rating-group">
 <label><input name="KidsAnimation" onchange="toggleComment('KidsAnimation', this.value)" required="" type="radio" value="5"/> Very good</label>
 <label><input name="KidsAnimation" onchange="toggleComment('KidsAnimation', this.value)" type="radio" value="4"/> Good</label>

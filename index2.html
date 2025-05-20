@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pickalbatros Feedback Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #fcf9f6;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .container {
+      max-width: 650px;
+      margin: 3vw auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px 0 rgba(30,100,180,0.08);
+      padding: 2.8vw 5vw 3vw 5vw;
+    }
+    h1 {
+      color: #2986ca;
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 0.7em;
+      letter-spacing: 0.04em;
+    }
+    label, .rating-label {
+      font-weight: bold;
+      color: #277eb8;
+      font-size: 1.07em;
+      display: block;
+      margin-top: 1.8em;
+      margin-bottom: .6em;
+    }
+    .field-row {
+      margin-bottom: 1.4em;
+    }
+    .ratings {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 0.6em;
+    }
+    .ratings label {
+      color: #2374ab;
+      font-weight: 500;
+      font-size: 1em;
+      margin: 0 .8em 0 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .comment-box {
+      display: none;
+      margin-top: .6em;
+      width: 100%;
+      max-width: 100%;
+      min-height: 58px;
+      border-radius: 7px;
+      border: 1px solid #b2cbe8;
+      padding: .7em;
+      font-size: 1em;
+      background: #f8fbff;
+      color: #1a4377;
+      transition: box-shadow .2s;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px 9px;
+      margin-bottom: 0.8em;
+      border-radius: 5px;
+      border: 1px solid #b2cbe8;
+      background: #f9fbfc;
+      color: #206090;
+      font-size: 1em;
+      transition: border .2s;
+    }
+    input[type="text"]:focus, input[type="email"]:focus, .comment-box:focus {
+      outline: none;
+      border: 1.6px solid #2e9ff6;
+      box-shadow: 0 2px 8px rgba(44,151,210,0.08);
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg, #3c8fd9 40%, #1e95bc 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      width: 100%;
+      padding: 15px;
+      margin-top: 2vw;
+      font-size: 1.15em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(30,100,180,0.07);
+      transition: background 0.2s;
+    }
+    button[type="submit"]:disabled {
+      background: #7fb3e5;
+      cursor: not-allowed;
+    }
+    .message {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: bold;
+      color: #24b162;
+      font-size: 1.13em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 4vw 3vw 7vw 3vw; }
+      h1 { font-size: 1.22rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pickalbatros Feedback Form</h1>
+    <form id="feedbackForm" autocomplete="off">
+      <label for="Room">Room Number <span style="font-weight:400;">(starts with 4 or 5):</span></label>
+      <input type="text" id="Room" name="Room" pattern="[4-5][0-9]{3}" required autocomplete="off">
+      <label for="Email">Email:</label>
+      <input type="email" id="Email" name="Email" required autocomplete="off">
+
+      <!-- Ratings fields below -->
+      <div id="fields-container"></div>
+
+      <button type="submit">Submit</button>
+      <div class="message" id="formMessage"></div>
+    </form>
+  </div>
+  <script>
+    // All your feedback fields:
+    const FIELDS = [
+      { key: 'Breakfast', label: 'Breakfast' },
+      { key: 'Lunch', label: 'Lunch' },
+      { key: 'Dinner', label: 'Dinner' },
+      { key: 'Service', label: 'Service' },
+      { key: 'Dinner_LAsiatique', label: "Dinner (L’Asiatique)" },
+      { key: 'Service_LAsiatique', label: "Service (L’Asiatique)" },
+      { key: 'Dinner_ItalianColonies', label: "Dinner (Italian & Colonies A-la carte)" },
+      { key: 'Service_ItalianColonies', label: "Service (Italian & Colonies A-la carte)" },
+      { key: 'FoodCourt', label: "Food Court (near Pirates aquapark)" },
+      { key: 'BeachBar', label: "Beach Bar" },
+      { key: 'ColumbusBar', label: "Columbus Bar" },
+      { key: 'OlympusBar', label: "Olympus Bar" },
+      { key: 'SportBar', label: "Sport Bar" },
+      { key: 'Reception', label: "Reception" },
+      { key: 'Luggage', label: "Luggage Delivery" },
+      { key: 'GuestRelation', label: "Guest Relation" },
+      { key: 'CleanRoom', label: "Room (Cleanliness)" },
+      { key: 'CleanHotel', label: "Hotel (Cleanliness)" },
+      { key: 'CleanBeach', label: "Beach (Cleanliness)" },
+      { key: 'DayProgram', label: "Day Program" },
+      { key: 'EveningShow', label: "Evening Show" },
+      { key: 'KidsAnimation', label: "Kids Animation" }
+    ];
+    // Generate fields with radio and hidden comment box
+    const fc = document.getElementById('fields-container');
+    FIELDS.forEach(field => {
+      const row = document.createElement('div');
+      row.className = 'field-row';
+      row.innerHTML = `
+        <span class="rating-label">${field.label}</span>
+        <div class="ratings">
+          <label><input type="radio" name="${field.key}" value="5" required> Very good</label>
+          <label><input type="radio" name="${field.key}" value="4"> Good</label>
+          <label><input type="radio" name="${field.key}" value="3"> Satisfied</label>
+          <label><input type="radio" name="${field.key}" value="2"> Dissatisfied</label>
+        </div>
+        <textarea name="${field.key}_comment" class="comment-box" maxlength="250" placeholder="If rating is 3 or 2, explain here (up to 250 chars)"></textarea>
+      `;
+      fc.appendChild(row);
+    });
+
+    // Show/hide comment boxes based on rating
+    document.querySelectorAll('.ratings input[type="radio"]').forEach(input => {
+      input.addEventListener('change', function() {
+        const field = this.name;
+        const value = this.value;
+        const commentBox = this.closest('.field-row').querySelector('.comment-box');
+        if (value === '3' || value === '2') {
+          commentBox.style.display = 'block';
+        } else {
+          commentBox.style.display = 'none';
+          commentBox.value = '';
+        }
+      });
+    });
+
+    // Submit handler
+    document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const messageDiv = document.getElementById("formMessage");
+      // Validation: if any rating is 3/2, comment required
+      let valid = true;
+      FIELDS.forEach(field => {
+        const val = form[field.key].value;
+        const comm = form[`${field.key}_comment`];
+        if ((val === "3" || val === "2") && comm.value.trim() === "") {
+          comm.style.border = "1.5px solid red";
+          valid = false;
+        } else {
+          comm.style.border = "";
+        }
+      });
+      if (!valid) {
+        messageDiv.textContent = "Please explain any Satisfied/Dissatisfied ratings!";
+        messageDiv.style.color = "#b82424";
+        return;
+      }
+      const data = {
+        Room: form.Room.value,
+        Email: form.Email.value
+      };
+      FIELDS.forEach(field => {
+        data[field.key] = form[field.key].value;
+        // Also send comment if present
+        if (form[`${field.key}_comment`].value.trim() !== "") {
+          data[`${field.key}_comment`] = form[`${field.key}_comment`].value.trim();
+        }
+      });
+
+      try {
+        await fetch("https://script.google.com/macros/s/AKfycbw1B4Uh-XfpF1gqjbk7ZtiOgB2T6xzy9fuaQP1TrkyvhWrUrze8uT3ZImxrSqvbkKFo/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        form.reset();
+        // Hide all comment boxes
+        document.querySelectorAll('.comment-box').forEach(el => el.style.display = 'none');
+        messageDiv.textContent = "Thank you for your feedback!";
+        messageDiv.style.color = "#24b162";
+      } catch (error) {
+        messageDiv.textContent = "Submission failed. Please try again.";
+        messageDiv.style.color = "#b82424";
+      }
+    });
+  </script>
+</body>
+</html>
