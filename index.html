@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Анкета специалиста</title>
+  <title>Анкета</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     *{box-sizing:border-box}
@@ -207,8 +207,8 @@
 <body>
   <div class="shell">
     <div class="top">
-      <h1>Анкета специалиста</h1>
-      <p class="sub">Все поля обязательны. Если поле появляется — его тоже нужно заполнить.</p>
+      <h1>Данные на рекламу</h1>
+      <p class="sub">Все поля обязательны к заполнению. Это позволит нам более ясно понять Вас, как специалиста, предоставив лучшие решения.</p>
     </div>
 
     <div class="progress-wrap">
@@ -224,12 +224,12 @@
 
         <!-- STEP 1 -->
         <section class="step active" data-title="Контакты">
-          <div class="step-title">Контакты</div>
-          <p class="step-desc">Заполни полностью — это пойдёт в таблицу.</p>
+          <div class="step-title">Контактные данные</div>
+          <p class="step-desc">Заполни полностью — это позволит нам в будущем связаться с Вами.</p>
 
           <div class="grid2">
             <div class="field">
-              <label>Имя и фамилия *</label>
+              <label>Имя, как можем к Вам обращаться *</label>
               <input type="text" name="name" required />
             </div>
 
@@ -244,7 +244,7 @@
 
           <div class="field">
             <label>Ссылки на соцсети *</label>
-            <div class="hint">Через запятую: Instagram, Telegram, сайт и т.д.</div>
+            <div class="hint">Через запятую: Instagram, Telegram, сайт и т.д, что считаете нужным</div>
             <textarea name="socials" required></textarea>
           </div>
 
@@ -256,27 +256,27 @@
 
         <!-- STEP 2 -->
         <section class="step" data-title="Практика">
-          <div class="step-title">Практика</div>
-          <p class="step-desc">Чётко и конкретно — потом из этого соберём креатив.</p>
+          <div class="step-title">Статистика по практике</div>
+          <p class="step-desc">Чётко и конкретно</p>
 
           <div class="field">
-            <label>Какие конкретные проблемы вы помогаете решать? *</label>
+            <label>Какие конкретные проблемы Вы помогаете решать? *</label>
             <textarea name="problems" required></textarea>
           </div>
 
           <div class="field">
-            <label>Как ваша практика помогает исправить жизнь к лучшему? *</label>
+            <label>Как Ваша практика помогает исправить жизнь к лучшему? *</label>
             <textarea name="practice_help" required></textarea>
           </div>
 
           <div class="grid2">
             <div class="field">
-              <label>Сколько лет вы занимаетесь этой практикой? *</label>
+              <label>Сколько лет Вы занимаетесь этой практикой? *</label>
               <input type="number" name="experience" min="0" step="1" required />
             </div>
 
             <div class="field">
-              <label>Скольким людям вы помогли? *</label>
+              <label>Скольким людям Вы помогли? *</label>
               <input type="number" name="people_count" min="0" step="1" required />
             </div>
           </div>
@@ -285,7 +285,7 @@
         <!-- STEP 3 -->
         <section class="step" data-title="Аудитория">
           <div class="step-title">Аудитория и позиционирование</div>
-          <p class="step-desc">Если выбираешь “есть ограничения” — появится поле, оно обязательно.</p>
+          <p class="step-desc">При выборе "другое" - будет еще поле, объясните почему.</p>
 
           <div class="field">
             <label>Есть ли возраст, с которым вы не работаете? *</label>
@@ -306,7 +306,6 @@
               <label><input type="radio" name="gender_limit_choice" value="нет" required /> Нет</label>
               <label><input type="radio" name="gender_limit_choice" value="женщины" required /> Только женщины</label>
               <label><input type="radio" name="gender_limit_choice" value="мужчины" required /> Только мужчины</label>
-              <label><input type="radio" name="gender_limit_choice" value="другое" required /> Другое</label>
             </div>
           </div>
 
@@ -326,7 +325,7 @@
           </div>
 
           <div class="field">
-            <label>В каком формате вы работаете? *</label>
+            <label>В каком формате вы работаете? (онлайн/оффлайн)*</label>
             <textarea name="format" required></textarea>
           </div>
         </section>
@@ -334,14 +333,14 @@
         <!-- STEP 4 -->
         <section class="step" data-title="Креатив">
           <div class="step-title">Составление рекламного креатива</div>
-          <p class="step-desc">Выбери один тип. В таблицу уйдёт только его название.</p>
+          <p class="step-desc">Выбери один тип.Обратите внимание - некоторые креативы требуют от Вас съемки</p>
 
           <div class="creative-grid" id="creativeGrid">
             <div class="creative" data-value="Интервью">
               <div class="creative-media"><img src="./interview.gif" alt="Интервью"></div>
               <div class="creative-body">
                 <div class="creative-title">Интервью</div>
-                <div class="creative-text">Вопросы → ответы. Экспертное раскрытие, доверие, глубина.</div>
+                <div class="creative-text">Вопросы → ответы. Экспертное раскрытие, доверие, глубина. Вы в кадре.</div>
               </div>
               <div class="creative-pick">
                 <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
@@ -356,7 +355,7 @@
               <div class="creative-media"><img src="./talking-head.gif" alt="Говорящая голова"></div>
               <div class="creative-body">
                 <div class="creative-title">Говорящая голова</div>
-                <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев.</div>
+                <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев.Желательно Вы в кадре.</div>
               </div>
               <div class="creative-pick">
                 <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
@@ -371,7 +370,7 @@
               <div class="creative-media"><img src="./client-story.gif" alt="История-клиента"></div>
               <div class="creative-body">
                 <div class="creative-title">История-клиента</div>
-                <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость.</div>
+                <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость. Ваша процедура , Вы можете не быть в кадре совсем.</div>
               </div>
               <div class="creative-pick">
                 <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
@@ -383,7 +382,7 @@
             </div>
           </div>
 
-          <div id="msgOk" class="msg ok hidden">Готово! Ответы записаны в Google Sheets ✅</div>
+          <div id="msgOk" class="msg ok hidden">Готово! Мы свяжемся с Вами в ближайшее время!</div>
           <div id="msgErr" class="msg err hidden"></div>
         </section>
 
