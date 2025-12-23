@@ -32,7 +32,9 @@
     h1{margin:0 0 8px; font-size: 2rem; letter-spacing:-.02em;}
     .sub{margin:0; opacity:.78; font-size: 1rem;}
 
-    .progress-wrap{ padding: 0 26px 18px; }
+    .progress-wrap{
+      padding: 0 26px 18px;
+    }
     .progress-line{
       height: 8px; background:#e7e7e7; border-radius:999px; overflow:hidden;
     }
@@ -48,7 +50,9 @@
       margin: 8px 0 10px;
     }
 
-    .content{ padding: 0 26px 24px; }
+    .content{
+      padding: 0 26px 24px;
+    }
 
     .step{display:none; animation:fade .18s ease;}
     .step.active{display:block;}
@@ -64,7 +68,7 @@
     label{display:block; font-weight:700; margin:0 0 6px;}
     .hint{font-size:.9rem; opacity:.7; margin:-2px 0 8px;}
 
-    input[type="text"], input[type="tel"], input[type="number"], textarea{
+    input[type="text"], input[type="number"], textarea{
       width:100%;
       padding: 11px 12px;
       border:1px solid #d6d6d6;
@@ -76,6 +80,23 @@
     }
     textarea{min-height: 88px; resize:vertical;}
     input:focus, textarea:focus{border-color:#111; background:#fff;}
+
+    /* красивый телефон */
+    .phone-wrap{
+      display:flex; gap:10px; align-items:stretch;
+    }
+    .phone-code{
+      width: 110px;
+      border:1px solid #d6d6d6;
+      border-radius:14px;
+      background:#f3f3f3;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800;
+      user-select:none;
+    }
+    .phone-wrap input{
+      flex:1;
+    }
 
     .radio-row{
       display:flex; flex-wrap:wrap;
@@ -96,5 +117,473 @@
     .hidden{display:none!important;}
 
     /* креатив-карточки */
-    .creative-grid{ display:grid; gap: 14px; }
-    @media(min-wid
+    .creative-grid{
+      display:grid;
+      gap: 14px;
+    }
+    @media(min-width:900px){
+      .creative-grid{grid-template-columns:repeat(3,1fr);}
+    }
+
+    .creative{
+      border:1px solid #e2e2e2;
+      border-radius: 18px;
+      overflow:hidden;
+      background:#fff;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      display:flex;
+      flex-direction:column;
+      min-height: 320px;
+      position:relative;
+    }
+    .creative:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0,0,0,.12);
+      border-color:#cfcfcf;
+    }
+    .creative.selected{
+      border-color:#111;
+      box-shadow: 0 18px 35px rgba(0,0,0,.16);
+    }
+    .creative-media{
+      height: 190px; background:#f2f2f2; overflow:hidden;
+    }
+    .creative-media img{
+      width:100%; height:100%; object-fit:cover; display:block;
+    }
+    .creative-body{padding: 12px 14px 14px; display:flex; flex-direction:column; gap:8px; flex:1;}
+    .creative-title{font-weight:900; font-size:1.05rem;}
+    .creative-text{opacity:.78; line-height:1.28;}
+    .creative-pick{
+      padding: 12px 14px 14px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .creative-pick .badge{
+      margin-left:auto;
+      font-weight:900;
+      border-radius:999px;
+      padding: 8px 12px;
+      background:#111;
+      color:#fff;
+      display:none;
+    }
+    .creative.selected .badge{display:inline-flex;}
+
+    .bottom{
+      padding: 16px 26px 22px;
+      display:flex; justify-content:space-between; align-items:center;
+      gap: 12px;
+      flex-wrap:wrap;
+      border-top: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.55);
+    }
+    button{
+      border:0;
+      border-radius:999px;
+      padding: 12px 22px;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      white-space:nowrap;
+    }
+    button:hover{transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.16);}
+    button:disabled{opacity:.55; cursor:default; transform:none; box-shadow:none;}
+    .btn-secondary{background:#f1f1f1; color:#111;}
+    .btn-primary{background:#111; color:#fff;}
+
+    .msg{
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight:800;
+    }
+    .msg.ok{background:#e7fbe7; border:1px solid #86d986;}
+    .msg.err{background:#fff0f0; border:1px solid #ffb4b4; color:#5a0000;}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="top">
+      <h1>Анкета специалиста</h1>
+      <p class="sub">Все поля обязательны. Если поле появляется — его тоже нужно заполнить.</p>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="progressText">Шаг 1 из 4</span>
+        <span id="progressTitle">Контакты</span>
+      </div>
+      <div class="progress-line"><div id="progressFill" class="progress-fill"></div></div>
+    </div>
+
+    <div class="content">
+      <form id="form">
+
+        <!-- STEP 1 -->
+        <section class="step active" data-title="Контакты">
+          <div class="step-title">Контакты</div>
+          <p class="step-desc">Заполни полностью — это пойдёт в таблицу.</p>
+
+          <div class="grid2">
+            <div class="field">
+              <label>Имя и фамилия *</label>
+              <input type="text" name="name" required />
+            </div>
+
+            <div class="field">
+              <label>Номер телефона *</label>
+              <div class="hint">Вводи только цифры после кода. Пример: 9895009232</div>
+              <div class="phone-wrap">
+                <div class="phone-code">+7</div>
+                <input type="text" name="phone" inputmode="numeric" pattern="[0-9]{10,15}" placeholder="9895009232" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Ссылки на соцсети *</label>
+            <div class="hint">Через запятую: Instagram, Telegram, сайт и т.д.</div>
+            <textarea name="socials" required></textarea>
+          </div>
+
+          <div class="field">
+            <label>Какую услугу предоставляете? *</label>
+            <input type="text" name="service" required />
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="step" data-title="Практика">
+          <div class="step-title">Практика</div>
+          <p class="step-desc">Чётко и конкретно — потом из этого соберём креатив.</p>
+
+          <div class="field">
+            <label>Какие конкретные проблемы вы помогаете решать? *</label>
+            <textarea name="problems" required></textarea>
+          </div>
+
+          <div class="field">
+            <label>Как ваша практика помогает исправить жизнь к лучшему? *</label>
+            <textarea name="practice_help" required></textarea>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label>Сколько лет вы занимаетесь этой практикой? *</label>
+              <input type="number" name="experience" min="0" step="1" required />
+            </div>
+
+            <div class="field">
+              <label>Скольким людям вы помогли? *</label>
+              <input type="number" name="people_count" min="0" step="1" required />
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="step" data-title="Аудитория">
+          <div class="step-title">Аудитория и позиционирование</div>
+          <p class="step-desc">Если выбираешь “есть ограничения” — появится поле, оно обязательно.</p>
+
+          <div class="field">
+            <label>Есть ли возраст, с которым вы не работаете? *</label>
+            <div class="radio-row">
+              <label><input type="radio" name="age_limit_choice" value="нет" required /> Нет</label>
+              <label><input type="radio" name="age_limit_choice" value="есть" required /> Да, есть ограничения</label>
+            </div>
+          </div>
+
+          <div class="field hidden" id="ageDetails">
+            <label>Уточните возрастные ограничения *</label>
+            <textarea name="age_limit" id="age_limit"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Есть ли ограничения по полу клиентов? *</label>
+            <div class="radio-row">
+              <label><input type="radio" name="gender_limit_choice" value="нет" required /> Нет</label>
+              <label><input type="radio" name="gender_limit_choice" value="женщины" required /> Только женщины</label>
+              <label><input type="radio" name="gender_limit_choice" value="мужчины" required /> Только мужчины</label>
+              <label><input type="radio" name="gender_limit_choice" value="другое" required /> Другое</label>
+            </div>
+          </div>
+
+          <div class="field hidden" id="genderDetails">
+            <label>Уточните ограничения по полу *</label>
+            <textarea name="gender_limit" id="gender_limit"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Опишите идеального клиента *</label>
+            <textarea name="ideal_client" required></textarea>
+          </div>
+
+          <div class="field">
+            <label>Чем вы отличаетесь от других специалистов? *</label>
+            <textarea name="difference" required></textarea>
+          </div>
+
+          <div class="field">
+            <label>В каком формате вы работаете? *</label>
+            <textarea name="format" required></textarea>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="step" data-title="Креатив">
+          <div class="step-title">Составление рекламного креатива</div>
+          <p class="step-desc">Выбери один тип. В таблицу уйдёт только его название.</p>
+
+          <div class="creative-grid" id="creativeGrid">
+            <div class="creative" data-value="Интервью">
+              <div class="creative-media"><img src="./interview.gif" alt="Интервью"></div>
+              <div class="creative-body">
+                <div class="creative-title">Интервью</div>
+                <div class="creative-text">Вопросы → ответы. Экспертное раскрытие, доверие, глубина.</div>
+              </div>
+              <div class="creative-pick">
+                <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
+                  <input type="radio" name="creative_type" value="Интервью" required>
+                  Выбрать
+                </label>
+                <span class="badge">Выбрано</span>
+              </div>
+            </div>
+
+            <div class="creative" data-value="Говорящая голова">
+              <div class="creative-media"><img src="./talking-head.gif" alt="Говорящая голова"></div>
+              <div class="creative-body">
+                <div class="creative-title">Говорящая голова</div>
+                <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев.</div>
+              </div>
+              <div class="creative-pick">
+                <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
+                  <input type="radio" name="creative_type" value="Говорящая голова" required>
+                  Выбрать
+                </label>
+                <span class="badge">Выбрано</span>
+              </div>
+            </div>
+
+            <div class="creative" data-value="История-клиента">
+              <div class="creative-media"><img src="./client-story.gif" alt="История-клиента"></div>
+              <div class="creative-body">
+                <div class="creative-title">История-клиента</div>
+                <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость.</div>
+              </div>
+              <div class="creative-pick">
+                <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
+                  <input type="radio" name="creative_type" value="История-клиента" required>
+                  Выбрать
+                </label>
+                <span class="badge">Выбрано</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="msgOk" class="msg ok hidden">Готово! Ответы записаны в Google Sheets ✅</div>
+          <div id="msgErr" class="msg err hidden"></div>
+        </section>
+
+        <div class="bottom">
+          <button type="button" id="prevBtn" class="btn-secondary" disabled>← Назад</button>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button type="button" id="nextBtn" class="btn-primary">Далее →</button>
+            <button type="submit" id="submitBtn" class="btn-primary hidden">Завершить</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuG1zrIquREZwlEGaNCH-CUOrTsV5rYv1SoNSR2ExEjdNaYczERUy87Oj5MmWcxLgYCg/exec";
+
+      const form = document.getElementById('form');
+      const steps = Array.from(document.querySelectorAll('.step'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      const progressText = document.getElementById('progressText');
+      const progressTitle = document.getElementById('progressTitle');
+      const progressFill = document.getElementById('progressFill');
+
+      const ageDetails = document.getElementById('ageDetails');
+      const ageLimit = document.getElementById('age_limit');
+
+      const genderDetails = document.getElementById('genderDetails');
+      const genderLimit = document.getElementById('gender_limit');
+
+      const creativeGrid = document.getElementById('creativeGrid');
+      const msgOk = document.getElementById('msgOk');
+      const msgErr = document.getElementById('msgErr');
+
+      let stepIndex = 0;
+
+      function setProgress(){
+        const total = steps.length;
+        const current = stepIndex + 1;
+        progressText.textContent = `Шаг ${current} из ${total}`;
+        progressTitle.textContent = steps[stepIndex].dataset.title || '';
+        progressFill.style.width = (current / total) * 100 + '%';
+      }
+
+      function showStep(i){
+        steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+        stepIndex = i;
+
+        prevBtn.disabled = (stepIndex === 0);
+
+        const isLast = (stepIndex === steps.length - 1);
+        nextBtn.classList.toggle('hidden', isLast);
+        submitBtn.classList.toggle('hidden', !isLast);
+
+        setProgress();
+      }
+
+      function syncConditionalRequired(){
+        const ageChoice = form.querySelector('input[name="age_limit_choice"]:checked')?.value;
+        if (ageChoice === 'есть'){
+          ageDetails.classList.remove('hidden');
+          ageLimit.required = true;
+        } else {
+          ageDetails.classList.add('hidden');
+          ageLimit.required = false;
+          ageLimit.value = '';
+        }
+
+        const genderChoice = form.querySelector('input[name="gender_limit_choice"]:checked')?.value;
+        if (genderChoice === 'другое'){
+          genderDetails.classList.remove('hidden');
+          genderLimit.required = true;
+        } else {
+          genderDetails.classList.add('hidden');
+          genderLimit.required = false;
+          genderLimit.value = '';
+        }
+      }
+
+      function validateCurrentStep(){
+        syncConditionalRequired();
+        const currentStep = steps[stepIndex];
+
+        // стандартная проверка required только в текущем шаге
+        const required = Array.from(currentStep.querySelectorAll('[required]'))
+          .filter(el => el.offsetParent !== null);
+
+        for (const el of required){
+          if (el.type === 'radio'){
+            const group = currentStep.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+            const ok = Array.from(group).some(r => r.checked);
+            if (!ok){
+              group[0].scrollIntoView({behavior:'smooth', block:'center'});
+              return false;
+            }
+          } else {
+            if (!String(el.value || '').trim()){
+              el.focus();
+              el.scrollIntoView({behavior:'smooth', block:'center'});
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+
+      prevBtn.addEventListener('click', () => {
+        if (stepIndex > 0) showStep(stepIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (!validateCurrentStep()) return;
+        showStep(stepIndex + 1);
+      });
+
+      // Креатив: клик по карточке выбирает radio всегда
+      creativeGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.creative');
+        if (!card) return;
+
+        const value = card.dataset.value;
+        const radio = card.querySelector(`input[type="radio"][name="creative_type"][value="${value}"]`);
+        if (radio) radio.checked = true;
+
+        document.querySelectorAll('.creative').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+
+      // подсветка по смене radio
+      form.addEventListener('change', (e) => {
+        if (e.target.name === 'creative_type'){
+          const val = e.target.value;
+          document.querySelectorAll('.creative').forEach(c => {
+            c.classList.toggle('selected', c.dataset.value === val);
+          });
+        }
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // финальная проверка всего
+        syncConditionalRequired();
+        const visibleRequired = Array.from(form.querySelectorAll('[required]')).filter(el => el.offsetParent !== null);
+
+        for (const el of visibleRequired){
+          if (el.type === 'radio'){
+            const group = form.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+            const ok = Array.from(group).some(r => r.checked);
+            if (!ok){
+              el.scrollIntoView({behavior:'smooth', block:'center'});
+              return;
+            }
+          } else {
+            if (!String(el.value||'').trim()){
+              el.focus();
+              return;
+            }
+          }
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+        msgOk.classList.add('hidden');
+        msgErr.classList.add('hidden');
+
+        try{
+          const resp = await fetch(SCRIPT_URL, { method:'POST', body: new FormData(form) });
+          const data = await resp.json().catch(() => null);
+
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          if (!data || data.status !== 'success') throw new Error(data?.message || 'Unknown error');
+
+          msgOk.classList.remove('hidden');
+          msgOk.scrollIntoView({behavior:'smooth', block:'start'});
+
+          // блокируем форму после успеха
+          Array.from(form.elements).forEach(el => el.disabled = true);
+
+        } catch (err){
+          msgErr.textContent =
+            'Не удалось отправить данные. Проверь: Deploy → Manage deployments → New version → Update.\n' +
+            'Ошибка: ' + String(err);
+          msgErr.classList.remove('hidden');
+          msgErr.scrollIntoView({behavior:'smooth', block:'start'});
+        } finally{
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Завершить';
+        }
+      });
+
+      setProgress();
+      showStep(0);
+    })();
+  </script>
+</body>
+</html>
