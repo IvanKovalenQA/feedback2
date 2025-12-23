@@ -4,437 +4,583 @@
   <meta charset="UTF-8" />
   <title>Анкета специалиста</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: url("https://raw.githubusercontent.com/IvanKovalenQA/feedback2/main/pick.jpg")
-        no-repeat center center fixed;
+  <style>
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0; padding:0; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: url("https://raw.githubusercontent.com/IvanKovalenQA/feedback2/main/pick.jpg") no-repeat center center fixed;
       background-size: cover;
     }
 
-    .overlay {
-      width: 100%;
-      max-width: 820px;
-      background: rgba(255, 255, 255, 0.94);
+    .card{
+      width:100%;
+      max-width: 860px;
+      background: rgba(255,255,255,0.94);
       border-radius: 18px;
-      padding: 26px 32px 32px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      padding: 22px 22px 26px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
       backdrop-filter: blur(6px);
     }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: 1.6rem;
-      text-align: center;
+    @media (min-width: 768px){
+      .card { padding: 26px 32px 32px; }
     }
 
-    .subtitle {
-      text-align: center;
-      font-size: 0.92rem;
-      opacity: 0.8;
-      margin-bottom: 18px;
-    }
+    h1{ margin:0 0 6px; text-align:center; font-size:1.7rem; }
+    .subtitle{ text-align:center; opacity:.8; margin:0 0 18px; }
 
-    .progress-container {
-      margin-bottom: 16px;
-    }
+    .progress-wrap{ margin-bottom: 16px; }
+    .progress-top{ display:flex; justify-content:space-between; font-size:.85rem; opacity:.8; margin-bottom:6px; }
+    .bar{ height:7px; background:#e5e5e5; border-radius:999px; overflow:hidden; }
+    .bar > div{ height:100%; width:0%; background:#000; transition:width .25s ease; }
 
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      margin-bottom: 6px;
-      opacity: 0.8;
-    }
+    .step{ display:none; animation:fade .2s ease; }
+    .step.active{ display:block; }
+    @keyframes fade{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
 
-    .progress-bar {
-      width: 100%;
-      height: 7px;
-      border-radius: 999px;
-      background: #e5e5e5;
-      overflow: hidden;
-    }
+    .step-title{ font-weight:700; font-size:1.15rem; margin: 6px 0 8px; }
+    .step-desc{ opacity:.8; margin:0 0 14px; }
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: #000;
-      border-radius: 999px;
-      transition: width 0.3s ease;
-    }
+    .grid2{ display:grid; gap: 10px 18px; }
+    @media (min-width:768px){ .grid2{ grid-template-columns: 1fr 1fr; } }
 
-    .step {
-      display: none;
-      animation: fadeIn 0.25s ease;
-    }
-    .step.active {
-      display: block;
-    }
+    label{ display:block; font-weight:600; margin:0 0 5px; }
+    .hint{ font-size:.85rem; opacity:.75; margin:-2px 0 6px; }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .step-title {
-      font-weight: 600;
-      margin-bottom: 12px;
-      font-size: 1.05rem;
-    }
-
-    .step-description {
-      font-size: 0.9rem;
-      opacity: 0.8;
-      margin-bottom: 14px;
-    }
-
-    .grid-2 {
-      display: grid;
-      gap: 10px 18px;
-    }
-    @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .hint {
-      font-size: 0.8rem;
-      opacity: 0.7;
-      margin-bottom: 4px;
-    }
-
-    input[type="text"],
-    input[type="tel"],
-    input[type="number"],
-    textarea {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #d3d3d3;
-      font: inherit;
-      background-color: #fafafa;
-      outline: none;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: #000;
-      background-color: #fff;
-    }
-
-    textarea {
-      min-height: 70px;
-      resize: vertical;
-    }
-
-    .radio-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-top: 4px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 9px 22px;
-      font: inherit;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      transition: 0.15s ease;
-    }
-
-    .btn-secondary {
-      background: #f1f1f1;
-      color: #111;
-    }
-    .btn-primary {
-      background: #000;
-      color: #fff;
-    }
-
-    .success-message {
-      margin-top: 12px;
-      padding: 12px 15px;
-      background: #e7fbe7;
-      border: 1px solid #88dd88;
+    input[type="text"], input[type="tel"], input[type="number"], textarea{
+      width:100%;
+      padding: 9px 11px;
       border-radius: 10px;
-      font-size: 0.95rem;
+      border:1px solid #d4d4d4;
+      background:#fafafa;
+      outline:none;
+      font:inherit;
     }
+    textarea{ min-height:72px; resize:vertical; }
+    input:focus, textarea:focus{ border-color:#000; background:#fff; }
 
-    .navigation {
-      margin-top: 22px;
-      display: flex;
+    .row{ margin-bottom: 14px; }
+
+    .radio-row{
+      display:flex; flex-wrap:wrap; gap: 10px 16px;
+      margin: 4px 0 0;
+    }
+    .radio-row label{ font-weight:400; display:flex; gap:8px; align-items:center; cursor:pointer; }
+
+    .hidden{ display:none !important; }
+
+    .nav{
+      margin-top: 18px;
+      display:flex;
       justify-content: space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    button{
+      border:0; border-radius:999px;
+      padding: 10px 22px;
+      font:inherit; font-weight:700;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      display:inline-flex; align-items:center; gap:8px;
+      white-space:nowrap;
+    }
+    button:hover{ transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,0.16); }
+    button:disabled{ opacity:.55; cursor:default; transform:none; box-shadow:none; }
+
+    .btn-secondary{ background:#f1f1f1; color:#111; }
+    .btn-primary{ background:#000; color:#fff; }
+
+    .ok{
+      margin-top: 12px;
+      padding: 12px 14px;
+      background:#e7fbe7;
+      border:1px solid #86d986;
+      border-radius: 12px;
+      font-weight:600;
     }
 
-    .hidden {
-      display: none !important;
+    /* --- Креатив --- */
+    .creative-grid{
+      display:grid;
+      gap: 12px;
+    }
+    @media (min-width: 768px){
+      .creative-grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .creative-card{
+      border: 1px solid #e1e1e1;
+      border-radius: 14px;
+      overflow:hidden;
+      background:#fff;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      display:flex;
+      flex-direction:column;
+      min-height: 280px;
+    }
+    .creative-card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+      border-color:#bdbdbd;
+    }
+    .creative-media{
+      width:100%;
+      height: 180px;
+      background:#f6f6f6;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .creative-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .creative-body{
+      padding: 10px 12px 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      flex:1;
+    }
+    .creative-title{ font-weight:800; }
+    .creative-text{ opacity:.78; font-size:.9rem; line-height:1.25; }
+    .creative-footer{
+      padding: 10px 12px 12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      border:1px solid #d8d8d8;
+      border-radius:999px;
+      padding: 6px 10px;
+      font-size:.85rem;
+      background:#fafafa;
+      gap:8px;
+      align-items:center;
+    }
+    .selected{
+      outline: 2px solid #000;
+      outline-offset: 2px;
+    }
+
+    .error{
+      margin-top: 10px;
+      padding: 10px 12px;
+      background:#fff0f0;
+      border:1px solid #ffb4b4;
+      border-radius: 12px;
+      font-weight:600;
+      color:#5a0000;
     }
   </style>
 </head>
 
 <body>
-
-  <div class="overlay">
+  <div class="card">
     <h1>Анкета специалиста</h1>
-    <p class="subtitle">
-      Ответьте на вопросы, чтобы мы могли описать вашу услугу и ценность для клиентов.
-    </p>
+    <p class="subtitle">Заполните все поля — это нужно, чтобы собрать сильный профиль и записать данные в таблицу.</p>
 
-    <div class="progress-container">
-      <div class="progress-label">
-        <span id="progress-text">Шаг 1 из 4</span>
-        <span id="step-title-short">Контакты</span>
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="progressText">Шаг 1 из 4</span>
+        <span id="progressTitle">Контакты</span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+      <div class="bar"><div id="progressFill"></div></div>
+    </div>
+
+    <form id="form">
+      <!-- STEP 1 -->
+      <section class="step active" data-title="Контакты">
+        <div class="step-title">Контакты и базовая информация</div>
+        <p class="step-desc">Все поля обязательные.</p>
+
+        <div class="grid2">
+          <div class="row">
+            <label>Имя и фамилия *</label>
+            <input type="text" name="name" required />
+          </div>
+
+          <div class="row">
+            <label>Номер телефона *</label>
+            <div class="hint">Можно в любом формате: +7..., +380..., 0...</div>
+            <input type="tel" name="phone" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Ссылки на соцсети *</label>
+          <div class="hint">Через запятую: Instagram, Telegram, сайт и т.д.</div>
+          <textarea name="socials" required></textarea>
+        </div>
+
+        <div class="row">
+          <label>Какую услугу предоставляете? *</label>
+          <input type="text" name="service" required />
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-title="Практика">
+        <div class="step-title">Суть вашей практики</div>
+        <p class="step-desc">Опишите конкретику — это ляжет в основу креативов.</p>
+
+        <div class="row">
+          <label>Какие конкретные проблемы вы помогаете решать? *</label>
+          <textarea name="problems" required></textarea>
+        </div>
+
+        <div class="row">
+          <label>Как ваша практика помогает исправить жизнь к лучшему? *</label>
+          <textarea name="practice_help" required></textarea>
+        </div>
+
+        <div class="grid2">
+          <div class="row">
+            <label>Сколько лет вы занимаетесь этой практикой? *</label>
+            <input type="number" name="experience" min="0" step="1" required />
+          </div>
+
+          <div class="row">
+            <label>Какому количеству людей вы помогли до сих пор? *</label>
+            <input type="number" name="people_count" min="0" step="1" required />
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-title="Аудитория">
+        <div class="step-title">Аудитория и уникальность</div>
+        <p class="step-desc">Тоже всё обязательное. Для “Да, есть ограничения” появится поле — оно станет обязательным автоматически.</p>
+
+        <div class="row">
+          <label>Есть ли возраст, с которым вы не работаете? *</label>
+          <div class="radio-row">
+            <label><input type="radio" name="age_limit_choice" value="нет" required /> Нет, работаю со всеми</label>
+            <label><input type="radio" name="age_limit_choice" value="есть" required /> Да, есть ограничения</label>
+          </div>
+
+          <div id="ageDetails" class="row hidden" style="margin-top:10px;">
+            <label>Уточните возрастные ограничения *</label>
+            <textarea name="age_limit" id="age_limit" required></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Есть ли ограничения по полу клиентов? *</label>
+          <div class="radio-row">
+            <label><input type="radio" name="gender_limit_choice" value="нет" required /> Нет</label>
+            <label><input type="radio" name="gender_limit_choice" value="женщины" required /> Только женщины</label>
+            <label><input type="radio" name="gender_limit_choice" value="мужчины" required /> Только мужчины</label>
+            <label><input type="radio" name="gender_limit_choice" value="другое" required /> Другое / уточнить</label>
+          </div>
+
+          <div id="genderDetails" class="row hidden" style="margin-top:10px;">
+            <label>Уточните ограничения по полу *</label>
+            <textarea name="gender_limit" id="gender_limit" required></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Опишите “идеального клиента” *</label>
+          <textarea name="ideal_client" required></textarea>
+        </div>
+
+        <div class="row">
+          <label>Чем вы отличаетесь от других специалистов? *</label>
+          <textarea name="difference" required></textarea>
+        </div>
+
+        <div class="row">
+          <label>В каком формате вы работаете с клиентами? *</label>
+          <textarea name="format" required></textarea>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" data-title="Креатив">
+        <div class="step-title">Составление рекламного креатива</div>
+        <p class="step-desc">Выберите один тип креатива. В таблицу запишется только его название.</p>
+
+        <!-- это скрытое поле — именно оно уйдет в таблицу -->
+        <input type="hidden" name="creative_type" id="creative_type" required />
+
+        <div class="creative-grid" id="creativeGrid">
+          <div class="creative-card" data-value="Интервью">
+            <div class="creative-media">
+              <img src="./interview.gif" alt="Интервью" />
+            </div>
+            <div class="creative-body">
+              <div class="creative-title">Интервью</div>
+              <div class="creative-text">Структурные вопросы → экспертные ответы. Подходит, если важно “раскрыть специалиста”.</div>
+            </div>
+            <div class="creative-footer">
+              <span class="pill"><input type="radio" name="creative_pick" /> Выбрать</span>
+            </div>
+          </div>
+
+          <div class="creative-card" data-value="Говорящая голова">
+            <div class="creative-media">
+              <img src="./talking-head.gif" alt="Говорящая голова" />
+            </div>
+            <div class="creative-body">
+              <div class="creative-title">Говорящая голова</div>
+              <div class="creative-text">Короткие сильные тезисы в кадре. Подходит для “быстрого” прогрева и доверия.</div>
+            </div>
+            <div class="creative-footer">
+              <span class="pill"><input type="radio" name="creative_pick" /> Выбрать</span>
+            </div>
+          </div>
+
+          <div class="creative-card" data-value="История-клиента">
+            <div class="creative-media">
+              <img src="./client-story.gif" alt="История клиента" />
+            </div>
+            <div class="creative-body">
+              <div class="creative-title">История-клиента</div>
+              <div class="creative-text">Проблема → путь → результат. Подходит, если есть реальные кейсы и хочется “вовлечь”.</div>
+            </div>
+            <div class="creative-footer">
+              <span class="pill"><input type="radio" name="creative_pick" /> Выбрать</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="creativeError" class="error hidden">
+          Выберите один тип креатива, чтобы продолжить.
+        </div>
+
+        <div id="ok" class="ok hidden">
+          Спасибо! Ваши ответы сохранены в Google Sheets.
+        </div>
+
+        <div id="serverError" class="error hidden"></div>
+      </section>
+
+      <div class="nav">
+        <button type="button" id="prevBtn" class="btn-secondary" disabled>← Назад</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" id="nextBtn" class="btn-primary">Далее →</button>
+          <button type="submit" id="submitBtn" class="btn-primary hidden">Завершить</button>
+        </div>
       </div>
-    </div>
-
-    <form id="wizard-form">
-      <div class="steps">
-<!-- ======== ШАГ 1 ======== -->
-<section class="step active" data-step="1" data-title-short="Контакты">
-  <div class="step-title">Контакты и базовая информация</div>
-
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Имя и фамилия *</label>
-      <input type="text" name="name" required>
-    </div>
-
-    <div class="form-group">
-      <label>Телефон</label>
-      <input type="tel" name="phone">
-    </div>
+    </form>
   </div>
 
-  <div class="form-group">
-    <label>Соцсети</label>
-    <textarea name="socials"></textarea>
-  </div>
+  <script>
+    (function(){
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuG1zrIquREZwlEGaNCH-CUOrTsV5rYv1SoNSR2ExEjdNaYczERUy87Oj5MmWcxLgYCg/exec";
 
-  <div class="form-group">
-    <label>Какую услугу вы предоставляете? *</label>
-    <input type="text" name="service" required>
-  </div>
-</section>
+      const form = document.getElementById('form');
+      const steps = Array.from(document.querySelectorAll('.step'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
 
-<!-- ======== ШАГ 2 ======== -->
-<section class="step" data-step="2" data-title-short="Практика">
-  <div class="step-title">Суть вашей практики</div>
+      const progressText = document.getElementById('progressText');
+      const progressTitle = document.getElementById('progressTitle');
+      const progressFill = document.getElementById('progressFill');
 
-  <div class="form-group">
-    <label>Какие проблемы вы помогаете решать? *</label>
-    <textarea name="problems" required></textarea>
-  </div>
+      const ageDetails = document.getElementById('ageDetails');
+      const ageLimit = document.getElementById('age_limit');
 
-  <div class="form-group">
-    <label>Как ваша практика помогает?</label>
-    <textarea name="practice_help"></textarea>
-  </div>
+      const genderDetails = document.getElementById('genderDetails');
+      const genderLimit = document.getElementById('gender_limit');
 
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Опыт (лет)</label>
-      <input type="number" name="experience">
-    </div>
+      const creativeType = document.getElementById('creative_type');
+      const creativeGrid = document.getElementById('creativeGrid');
+      const creativeError = document.getElementById('creativeError');
 
-    <div class="form-group">
-      <label>Сколько людей вы уже консультировали?</label>
-      <input type="number" name="people_count">
-    </div>
-  </div>
-</section>
+      const ok = document.getElementById('ok');
+      const serverError = document.getElementById('serverError');
 
-<!-- ======== ШАГ 3 ======== -->
-<section class="step" data-step="3" data-title-short="Аудитория">
-  <div class="step-title">Кому вы помогаете</div>
+      let stepIndex = 0;
 
-  <div class="form-group">
-    <label>Возрастные ограничения?</label>
-    <div class="radio-row">
-      <label><input type="radio" name="age-limit-radio" value="нет" checked> Нет</label>
-      <label><input type="radio" name="age-limit-radio" value="есть"> Да</label>
-    </div>
+      function setProgress(){
+        const total = steps.length;
+        const current = stepIndex + 1;
+        progressText.textContent = `Шаг ${current} из ${total}`;
+        progressTitle.textContent = steps[stepIndex].dataset.title || '';
+        progressFill.style.width = (current / total) * 100 + '%';
+      }
 
-    <div id="age-limit-details" class="hidden">
-      <textarea name="age_limit"></textarea>
-    </div>
-  </div>
+      function showStep(i){
+        steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+        stepIndex = i;
 
-  <div class="form-group">
-    <label>Ограничения по полу?</label>
-    <div class="radio-row">
-      <label><input type="radio" name="gender-limit-radio" value="нет" checked> Нет</label>
-      <label><input type="radio" name="gender-limit-radio" value="женщины"> Только женщины</label>
-      <label><input type="radio" name="gender-limit-radio" value="мужчины"> Только мужчины</label>
-      <label><input type="radio" name="gender-limit-radio" value="другое"> Уточнить</label>
-    </div>
+        prevBtn.disabled = stepIndex === 0;
 
-    <div id="gender-limit-details" class="hidden">
-      <textarea name="gender_limit"></textarea>
-    </div>
-  </div>
+        const isLast = stepIndex === steps.length - 1;
+        nextBtn.classList.toggle('hidden', isLast);
+        submitBtn.classList.toggle('hidden', !isLast);
 
-  <div class="form-group">
-    <label>Ваш идеальный клиент</label>
-    <textarea name="ideal_client"></textarea>
-  </div>
-</section>
+        setProgress();
+      }
 
-<!-- ======== ШАГ 4 ======== -->
-<section class="step" data-step="4" data-title-short="Уникальность">
-  <div class="step-title">Ваша уникальность</div>
+      function validateCurrentStep(){
+        // Проверяем required внутри текущего шага
+        const currentStep = steps[stepIndex];
 
-  <div class="form-group">
-    <label>Чем вы отличаетесь от других?</label>
-    <textarea name="difference"></textarea>
-  </div>
+        // Спец-проверка для шага "Креатив": creative_type обязателен
+        if (currentStep.dataset.title === 'Креатив') {
+          if (!creativeType.value || creativeType.value.trim() === '') {
+            creativeError.classList.remove('hidden');
+            return false;
+          }
+          creativeError.classList.add('hidden');
+        }
 
-  <div class="form-group">
-    <label>Формат работы</label>
-    <textarea name="format"></textarea>
-  </div>
+        const required = Array.from(currentStep.querySelectorAll('[required]'));
+        for (const el of required) {
+          // пропускаем скрытые условные поля (которые hidden) — но мы ниже управляем required корректно
+          if (el.offsetParent === null) continue;
 
-  <div id="success" class="success-message hidden">
-    Спасибо! Ваши ответы сохранены в Google Sheets.
-  </div>
-</section>
+          if (el.type === 'radio') {
+            const group = currentStep.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+            const checked = Array.from(group).some(r => r.checked);
+            if (!checked) {
+              group[0].scrollIntoView({behavior:'smooth', block:'center'});
+              return false;
+            }
+          } else {
+            if (!String(el.value || '').trim()) {
+              el.focus();
+              el.scrollIntoView({behavior:'smooth', block:'center'});
+              return false;
+            }
+          }
+        }
+        return true;
+      }
 
-</div>
+      // --- Условная обязательность ---
+      function syncConditionalRequired(){
+        const ageChoice = form.querySelector('input[name="age_limit_choice"]:checked')?.value;
+        if (ageChoice === 'есть') {
+          ageDetails.classList.remove('hidden');
+          ageLimit.required = true;
+        } else {
+          ageDetails.classList.add('hidden');
+          ageLimit.required = false;
+          ageLimit.value = '';
+        }
 
-<!-- ======== НАВИГАЦИЯ ======== -->
-<div class="navigation">
-  <button type="button" id="prev-btn" class="btn-secondary hidden">← Назад</button>
-  <button type="button" id="next-btn" class="btn-primary">Далее →</button>
-  <button type="submit" id="submit-btn" class="btn-primary hidden">Завершить</button>
-</div>
+        const genderChoice = form.querySelector('input[name="gender_limit_choice"]:checked')?.value;
+        if (genderChoice === 'другое') {
+          genderDetails.classList.remove('hidden');
+          genderLimit.required = true;
+        } else {
+          genderDetails.classList.add('hidden');
+          genderLimit.required = false;
+          genderLimit.value = '';
+        }
+      }
 
-</form>
-</div>
-
-<script>
-(function () {
-
-  /* ---------- ТВОЙ РЕАЛЬНЫЙ URL ВСТАВЛЕН ЗДЕСЬ ---------- */
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuG1zrIquREZwlEGaNCH-CUOrTsV5rYv1SoNSR2ExEjdNaYczERUy87Oj5MmWcxLgYCg/exec";
-
-  const form = document.getElementById("wizard-form");
-  const steps = [...document.querySelectorAll(".step")];
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const submitBtn = document.getElementById("submit-btn");
-  const progressFill = document.getElementById("progress-fill");
-  const progressText = document.getElementById("progress-text");
-  const stepTitleShort = document.getElementById("step-title-short");
-  const success = document.getElementById("success");
-
-  let currentStep = 1;
-
-  function showStep(n) {
-    steps.forEach(s => s.classList.remove("active"));
-    steps[n - 1].classList.add("active");
-
-    prevBtn.classList.toggle("hidden", n === 1);
-    nextBtn.classList.toggle("hidden", n === steps.length);
-    submitBtn.classList.toggle("hidden", n !== steps.length);
-
-    progressFill.style.width = (n / steps.length) * 100 + "%";
-    progressText.textContent = `Шаг ${n} из ${steps.length}`;
-    stepTitleShort.textContent = steps[n - 1].dataset.titleShort;
-  }
-
-  prevBtn.onclick = () => {
-    if (currentStep > 1) showStep(--currentStep);
-  };
-
-  nextBtn.onclick = () => {
-    showStep(++currentStep);
-  };
-
-  // Показ скрытых полей
-  document.querySelectorAll("input[name='age-limit-radio']").forEach(r => {
-    r.onchange = () => {
-      document.getElementById("age-limit-details").classList.toggle("hidden", r.value !== "есть");
-    };
-  });
-
-  document.querySelectorAll("input[name='gender-limit-radio']").forEach(r => {
-    r.onchange = () => {
-      document.getElementById("gender-limit-details").classList.toggle("hidden", r.value !== "другое");
-    };
-  });
-
-  /* ---------- ОТПРАВКА В GOOGLE SHEETS ---------- */
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-
-    submitBtn.textContent = "Отправка...";
-    submitBtn.disabled = true;
-
-    try {
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: new FormData(form)
+      form.addEventListener('change', (e) => {
+        if (e.target.name === 'age_limit_choice' || e.target.name === 'gender_limit_choice') {
+          syncConditionalRequired();
+        }
       });
 
-      const result = await response.json();
+      // --- Креатив: выбор карточки ---
+      creativeGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.creative-card');
+        if (!card) return;
 
-      if (result.status !== "success") throw new Error();
+        const value = card.dataset.value;
 
-      nextBtn.classList.add("hidden");
-      submitBtn.classList.add("hidden");
-      prevBtn.classList.add("hidden");
+        // set hidden value (это уедет в таблицу)
+        creativeType.value = value;
 
-      success.classList.remove("hidden");
-      success.scrollIntoView({ behavior: "smooth" });
+        // UI select
+        document.querySelectorAll('.creative-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
 
-    } catch (err) {
-      alert("Ошибка отправки. Проверь публикацию скрипта.");
-    }
+        // radio-метка внутри для красоты
+        document.querySelectorAll('.creative-card input[type="radio"][name="creative_pick"]').forEach(r => r.checked = false);
+        const radio = card.querySelector('input[type="radio"][name="creative_pick"]');
+        if (radio) radio.checked = true;
 
-    submitBtn.textContent = "Завершить";
-    submitBtn.disabled = false;
-  };
+        creativeError.classList.add('hidden');
+      });
 
-  showStep(1);
+      // --- Навигация ---
+      prevBtn.addEventListener('click', () => {
+        if (stepIndex > 0) showStep(stepIndex - 1);
+      });
 
-})();
-</script>
+      nextBtn.addEventListener('click', () => {
+        syncConditionalRequired();
+        if (!validateCurrentStep()) return;
+        if (stepIndex < steps.length - 1) showStep(stepIndex + 1);
+      });
 
+      // --- Submit ---
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        syncConditionalRequired();
+
+        // Проверяем текущий шаг (креатив)
+        if (!validateCurrentStep()) return;
+
+        // Доп. гарантия: проверим все required по всей форме перед отправкой
+        const allRequired = Array.from(form.querySelectorAll('[required]')).filter(el => el.offsetParent !== null);
+        for (const el of allRequired) {
+          if (el.type !== 'radio' && !String(el.value || '').trim()) {
+            el.focus();
+            return;
+          }
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+        serverError.classList.add('hidden');
+        ok.classList.add('hidden');
+
+        try {
+          const resp = await fetch(SCRIPT_URL, { method:'POST', body: new FormData(form) });
+
+          let json = null;
+          try { json = await resp.json(); } catch(_) {}
+
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          if (!json || json.status !== 'success') {
+            throw new Error((json && json.message) ? json.message : 'Unknown error');
+          }
+
+          ok.classList.remove('hidden');
+          ok.scrollIntoView({behavior:'smooth', block:'start'});
+
+          // Можно заблокировать форму после успеха:
+          Array.from(form.elements).forEach(el => el.disabled = true);
+
+        } catch (err) {
+          serverError.textContent =
+            'Не удалось отправить данные. Проверь, что Web App обновлён на новую версию (Deploy → Manage deployments → New version).\n' +
+            'Ошибка: ' + String(err);
+          serverError.classList.remove('hidden');
+          serverError.scrollIntoView({behavior:'smooth', block:'start'});
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Завершить';
+        }
+      });
+
+      // init
+      syncConditionalRequired();
+      showStep(0);
+    })();
+  </script>
 </body>
 </html>
-
