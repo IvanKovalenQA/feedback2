@@ -235,7 +235,9 @@
 
             <div class="field">
               <label>Номер телефона *</label>
-              <div class="hint">Введи свой номер телефона (WhatsApp)</div>
+              <div class="hint">Вводи только цифры после кода. Пример: 9895009232</div>
+              <div class="phone-wrap">
+                <div class="phone-code">+7</div>
                 <input type="text" name="phone" inputmode="numeric" pattern="[0-9]{10,15}" placeholder="9895009232" required />
               </div>
             </div>
@@ -400,7 +402,7 @@
 
   <script>
     (function(){
-      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6sWKe1nEh75CPAvAvkv00k1wyFVLSTJjMvYnHeE6Bojk88GGELdPWTk3UQALRsVGnUA/exec";
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuG1zrIquREZwlEGaNCH-CUOrTsV5rYv1SoNSR2ExEjdNaYczERUy87Oj5MmWcxLgYCg/exec";
 
       const form = document.getElementById('form');
       const steps = Array.from(document.querySelectorAll('.step'));
