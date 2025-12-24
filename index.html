@@ -68,7 +68,7 @@
     label{display:block; font-weight:700; margin:0 0 6px;}
     .hint{font-size:.9rem; opacity:.7; margin:-2px 0 8px;}
 
-    input[type="text"], input[type="number"], textarea{
+    input[type="text"], input[type="tel"], input[type="number"], textarea{
       width:100%;
       padding: 11px 12px;
       border:1px solid #d6d6d6;
@@ -81,18 +81,8 @@
     textarea{min-height: 88px; resize:vertical;}
     input:focus, textarea:focus{border-color:#111; background:#fff;}
 
-    /* красивый телефон */
     .phone-wrap{
       display:flex; gap:10px; align-items:stretch;
-    }
-    .phone-code{
-      width: 110px;
-      border:1px solid #d6d6d6;
-      border-radius:14px;
-      background:#f3f3f3;
-      display:flex; align-items:center; justify-content:center;
-      font-weight:800;
-      user-select:none;
     }
     .phone-wrap input{
       flex:1;
@@ -116,7 +106,6 @@
 
     .hidden{display:none!important;}
 
-    /* креатив-карточки */
     .creative-grid{
       display:grid;
       gap: 14px;
@@ -208,7 +197,7 @@
   <div class="shell">
     <div class="top">
       <h1>Данные на рекламу</h1>
-      <p class="sub">Все поля обязательны к заполнению. Это позволит нам более ясно понять Вас, как специалиста, предоставив лучшие решения.</p>
+      <p class="sub">Все поля обязательны к заполнению. Это позволит нам лучше понять вашу услугу и подготовить сильные решения.</p>
     </div>
 
     <div class="progress-wrap">
@@ -225,7 +214,7 @@
         <!-- STEP 1 -->
         <section class="step active" data-title="Контакты">
           <div class="step-title">Контактные данные</div>
-          <p class="step-desc">Заполни полностью — это позволит нам в будущем связаться с Вами.</p>
+          <p class="step-desc">Заполните — чтобы мы могли быстро связаться с вами.</p>
 
           <div class="grid2">
             <div class="field">
@@ -234,17 +223,17 @@
             </div>
 
             <div class="field">
-              <label>Номер телефона *</label>
-              <div class="hint">Введите номер телефона/Wahtsapp</div>
+              <label>Номер телефона / WhatsApp *</label>
+              <div class="hint">Введите номер в любом формате: +380..., +7..., 0... — как удобно.</div>
               <div class="phone-wrap">
-                <input type="text" name="phone" inputmode="numeric" pattern="[0-9]{10,15}" placeholder="9895009232" required />
+                <input type="tel" name="phone" placeholder="+380501234567" required />
               </div>
             </div>
           </div>
 
           <div class="field">
             <label>Ссылки на соцсети *</label>
-            <div class="hint">Через запятую: Instagram, Telegram, сайт и т.д, что считаете нужным</div>
+            <div class="hint">Instagram, Telegram, сайт и т.д. Можно через запятую.</div>
             <textarea name="socials" required></textarea>
           </div>
 
@@ -257,7 +246,7 @@
         <!-- STEP 2 -->
         <section class="step" data-title="Практика">
           <div class="step-title">Статистика по практике</div>
-          <p class="step-desc">Чётко и конкретно</p>
+          <p class="step-desc">Чётко и конкретно — как вы бы объяснили это клиенту.</p>
 
           <div class="field">
             <label>Какие конкретные проблемы Вы помогаете решать? *</label>
@@ -285,7 +274,7 @@
         <!-- STEP 3 -->
         <section class="step" data-title="Аудитория">
           <div class="step-title">Аудитория и позиционирование</div>
-          <p class="step-desc">При выборе "другое" - будет еще поле, объясните почему.</p>
+          <p class="step-desc">Эти ответы помогут точнее описать вашу аудиторию и преимущества.</p>
 
           <div class="field">
             <label>Есть ли возраст, с которым вы не работаете? *</label>
@@ -309,11 +298,6 @@
             </div>
           </div>
 
-          <div class="field hidden" id="genderDetails">
-            <label>Уточните ограничения по полу *</label>
-            <textarea name="gender_limit" id="gender_limit"></textarea>
-          </div>
-
           <div class="field">
             <label>Опишите идеального клиента *</label>
             <textarea name="ideal_client" required></textarea>
@@ -325,7 +309,7 @@
           </div>
 
           <div class="field">
-            <label>В каком формате вы работаете? (онлайн/оффлайн)*</label>
+            <label>В каком формате вы работаете? (онлайн/оффлайн) *</label>
             <textarea name="format" required></textarea>
           </div>
         </section>
@@ -333,7 +317,7 @@
         <!-- STEP 4 -->
         <section class="step" data-title="Креатив">
           <div class="step-title">Составление рекламного креатива</div>
-          <p class="step-desc">Выбери один тип.Обратите внимание - некоторые креативы требуют от Вас съемки</p>
+          <p class="step-desc">Выберите один тип. Некоторые варианты могут потребовать съёмки с вашей стороны.</p>
 
           <div class="creative-grid" id="creativeGrid">
             <div class="creative" data-value="Интервью">
@@ -355,7 +339,7 @@
               <div class="creative-media"><img src="./talking-head.gif" alt="Говорящая голова"></div>
               <div class="creative-body">
                 <div class="creative-title">Говорящая голова</div>
-                <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев.Желательно Вы в кадре.</div>
+                <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев. Желательно вы в кадре.</div>
               </div>
               <div class="creative-pick">
                 <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
@@ -370,7 +354,7 @@
               <div class="creative-media"><img src="./client-story.gif" alt="История-клиента"></div>
               <div class="creative-body">
                 <div class="creative-title">История-клиента</div>
-                <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость. Ваша процедура , Вы можете не быть в кадре совсем.</div>
+                <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость. Можно без вас в кадре — только процесс/процедура.</div>
               </div>
               <div class="creative-pick">
                 <label style="margin:0; font-weight:800; display:flex; gap:10px; align-items:center; cursor:pointer;">
@@ -382,7 +366,7 @@
             </div>
           </div>
 
-          <div id="msgOk" class="msg ok hidden">Готово! Мы свяжемся с Вами в ближайшее время!</div>
+          <div id="msgOk" class="msg ok hidden">Спасибо! Мы свяжемся с Вами в ближайшее время!</div>
           <div id="msgErr" class="msg err hidden"></div>
         </section>
 
@@ -400,7 +384,7 @@
 
   <script>
     (function(){
-      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuG1zrIquREZwlEGaNCH-CUOrTsV5rYv1SoNSR2ExEjdNaYczERUy87Oj5MmWcxLgYCg/exec";
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylcAIRWRG8s2WYkl3F8HPIqRqCQAWTwUeu7lg_5jcUWqMZ7MM8XpDxSte9zDXjkC4oLQ/exec";
 
       const form = document.getElementById('form');
       const steps = Array.from(document.querySelectorAll('.step'));
@@ -414,9 +398,6 @@
 
       const ageDetails = document.getElementById('ageDetails');
       const ageLimit = document.getElementById('age_limit');
-
-      const genderDetails = document.getElementById('genderDetails');
-      const genderLimit = document.getElementById('gender_limit');
 
       const creativeGrid = document.getElementById('creativeGrid');
       const msgOk = document.getElementById('msgOk');
@@ -455,23 +436,12 @@
           ageLimit.required = false;
           ageLimit.value = '';
         }
-
-        const genderChoice = form.querySelector('input[name="gender_limit_choice"]:checked')?.value;
-        if (genderChoice === 'другое'){
-          genderDetails.classList.remove('hidden');
-          genderLimit.required = true;
-        } else {
-          genderDetails.classList.add('hidden');
-          genderLimit.required = false;
-          genderLimit.value = '';
-        }
       }
 
       function validateCurrentStep(){
         syncConditionalRequired();
         const currentStep = steps[stepIndex];
 
-        // стандартная проверка required только в текущем шаге
         const required = Array.from(currentStep.querySelectorAll('[required]'))
           .filter(el => el.offsetParent !== null);
 
@@ -503,7 +473,6 @@
         showStep(stepIndex + 1);
       });
 
-      // Креатив: клик по карточке выбирает radio всегда
       creativeGrid.addEventListener('click', (e) => {
         const card = e.target.closest('.creative');
         if (!card) return;
@@ -516,7 +485,6 @@
         card.classList.add('selected');
       });
 
-      // подсветка по смене radio
       form.addEventListener('change', (e) => {
         if (e.target.name === 'creative_type'){
           const val = e.target.value;
@@ -524,14 +492,18 @@
             c.classList.toggle('selected', c.dataset.value === val);
           });
         }
+        if (e.target.name === 'age_limit_choice'){
+          syncConditionalRequired();
+        }
       });
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // финальная проверка всего
         syncConditionalRequired();
-        const visibleRequired = Array.from(form.querySelectorAll('[required]')).filter(el => el.offsetParent !== null);
+
+        const visibleRequired = Array.from(form.querySelectorAll('[required]'))
+          .filter(el => el.offsetParent !== null);
 
         for (const el of visibleRequired){
           if (el.type === 'radio'){
@@ -550,7 +522,7 @@
         }
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Отправка...';
+        submitBtn.textContent = 'Отправляем...';
         msgOk.classList.add('hidden');
         msgErr.classList.add('hidden');
 
@@ -564,13 +536,12 @@
           msgOk.classList.remove('hidden');
           msgOk.scrollIntoView({behavior:'smooth', block:'start'});
 
-          // блокируем форму после успеха
           Array.from(form.elements).forEach(el => el.disabled = true);
 
         } catch (err){
           msgErr.textContent =
-            'Не удалось отправить данные. Проверь: Deploy → Manage deployments → New version → Update.\n' +
-            'Ошибка: ' + String(err);
+            'Не получилось отправить анкету. Попробуйте ещё раз чуть позже.\n' +
+            'Техническая ошибка: ' + String(err);
           msgErr.classList.remove('hidden');
           msgErr.scrollIntoView({behavior:'smooth', block:'start'});
         } finally{
