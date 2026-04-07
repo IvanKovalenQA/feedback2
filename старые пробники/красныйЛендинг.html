@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Анкета — Данные на рекламу</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0d0202;--card:#1a0505;--card2:#110303;
+      --accent:#ff3b3b;--accent-glow:rgba(255,59,59,0.28);--accent-dim:rgba(255,59,59,0.08);
+      --text:#f4f4f4;--muted:#aab2c0;
+      --border:rgba(255,59,59,0.15);--border-dim:rgba(255,255,255,0.07);
+      --r:20px;--container:860px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;line-height:1.6}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 25% 40%,#1a0505 0%,#0d0202 65%);z-index:-1;animation:bgPulse 8s ease-in-out infinite}
+    @keyframes bgPulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+    .siteHeader{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;background:rgba(13,2,2,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .headerInner{width:min(var(--container),100% - 40px);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase}
+    .brandIcon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;letter-spacing:0}
+    .brand .sep{color:rgba(255,59,59,.45);margin:0 3px}
+    .headerRight{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+    .main{padding-top:96px;padding-bottom:60px}
+    .container{width:min(var(--container),100% - 40px);margin:0 auto}
+
+    .pageHead{text-align:center;padding:44px 0 36px}
+    .pageTag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+    .pageTitle{font-family:'JetBrains Mono',monospace;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;text-transform:uppercase;letter-spacing:.03em;line-height:1.1;margin-bottom:14px}
+    .cursor{display:inline-block;width:3px;height:.85em;background:var(--accent);margin-left:4px;vertical-align:text-bottom;animation:blink .9s step-end infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .pageDesc{color:var(--muted);font-size:.92rem;max-width:500px;margin:0 auto}
+
+    .progressWrap{margin-bottom:28px}
+    .progressMeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+    .progressMeta .cur{color:var(--accent);font-weight:700}
+    .progressTrack{height:2px;background:var(--border-dim);border-radius:99px;overflow:hidden}
+    .progressFill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px var(--accent-glow)}
+    .stepDots{display:flex;gap:8px;margin-top:12px}
+    .stepDot{height:3px;flex:1;border-radius:99px;background:var(--border-dim);transition:all .3s}
+    .stepDot.active{background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+    .stepDot.done{background:rgba(255,59,59,.35)}
+
+    .formCard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 4px 60px rgba(255,59,59,.07)}
+    .formCardInner{padding:40px}
+    @media(max-width:600px){.formCardInner{padding:24px 18px}}
+
+    .step{display:none}
+    .step.active{display:block;animation:stepIn .28s cubic-bezier(.4,0,.2,1)}
+    @keyframes stepIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+
+    .stepHeader{margin-bottom:32px}
+    .stepTag{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .stepTag::before{content:'';display:block;width:18px;height:1px;background:var(--accent);opacity:.6}
+    .stepTag::after{content:'';flex:1;height:1px;background:var(--border)}
+    .stepTitle{font-family:'JetBrains Mono',monospace;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1.15;margin-bottom:8px}
+    .stepDesc{color:var(--muted);font-size:.88rem}
+
+    .grid2{display:grid;gap:18px 24px}
+    @media(min-width:620px){.grid2{grid-template-columns:1fr 1fr}}
+    .field{margin-bottom:20px}
+    label{display:block;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .hint{font:400 .8rem/1.5 'Inter',sans-serif;color:rgba(170,178,192,.65);margin-bottom:8px;text-transform:none;letter-spacing:0}
+
+    input[type="text"],input[type="tel"],input[type="number"],textarea{width:100%;padding:13px 16px;background:rgba(255,255,255,.03);border:1px solid var(--border-dim);border-radius:12px;color:var(--text);font:500 .93rem/1 'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none}
+    input::placeholder,textarea::placeholder{color:rgba(170,178,192,.3)}
+    input:focus,textarea:focus{border-color:var(--accent);background:rgba(255,59,59,.04);box-shadow:0 0 0 3px rgba(255,59,59,.1)}
+    textarea{min-height:96px;resize:vertical;line-height:1.6;font-size:.88rem}
+    .inputWrap{position:relative}
+    .inputSuffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);pointer-events:none;opacity:.55}
+
+    .radioRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .radioPill{cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--border-dim);border-radius:999px;background:rgba(255,255,255,.02);font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);transition:all .2s}
+    .radioPill:hover{border-color:rgba(255,59,59,.5);color:var(--text)}
+    .radioPill.checked{border-color:var(--accent);background:var(--accent-dim);color:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
+    .radioPill input{display:none}
+    .hidden{display:none!important}
+
+    .creativeGrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+    .creative{border:1px solid var(--border-dim);border-radius:var(--r);background:var(--card2);overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+    .creative:hover{border-color:rgba(255,59,59,.4);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,59,59,.1)}
+    .creative.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 36px var(--accent-glow)}
+    .creativeMedia{height:155px;background:#0a0202;overflow:hidden;position:relative}
+    .creativeMedia img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8) saturate(.85);transition:filter .3s,transform .3s}
+    .creative:hover .creativeMedia img{filter:brightness(1) saturate(1);transform:scale(1.04)}
+    .creative.selected .creativeMedia img{filter:brightness(1) saturate(1)}
+    .creativeTag{position:absolute;top:10px;left:10px;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(13,2,2,.88);color:var(--accent);border:1px solid rgba(255,59,59,.3);padding:4px 10px;border-radius:999px}
+    .creativeBody{padding:16px;flex:1;display:flex;flex-direction:column;gap:6px}
+    .creativeTitle{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text);transition:color .2s}
+    .creative.selected .creativeTitle{color:var(--accent)}
+    .creativeText{font-size:.8rem;color:var(--muted);line-height:1.5;flex:1}
+    .creativePick{padding:12px 16px;border-top:1px solid var(--border-dim);display:flex;align-items:center;justify-content:space-between}
+    .creativePick label{text-transform:uppercase;font-size:.68rem;font-weight:700;letter-spacing:.08em;color:var(--muted);cursor:pointer;margin:0;transition:color .2s;display:flex;align-items:center;gap:6px}
+    .creative.selected .creativePick label{color:var(--accent)}
+    .creativePick input[type="radio"]{display:none}
+    .badge{display:none;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:#fff;padding:4px 10px;border-radius:999px}
+    .creative.selected .badge{display:inline-flex}
+
+    .formBottom{padding:22px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,59,59,.02)}
+    @media(max-width:600px){.formBottom{padding:18px}}
+    .btn{border:none;border-radius:999px;padding:13px 26px;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:all .22s;white-space:nowrap}
+    .btn:hover{transform:translateY(-2px)}
+    .btn:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
+    .btnGhost{background:transparent;color:var(--muted);border:1px solid var(--border-dim)}
+    .btnGhost:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+    .btnAccent{background:var(--accent);color:#fff;box-shadow:0 0 20px rgba(255,59,59,.3)}
+    .btnAccent:hover{background:#ff5252;box-shadow:0 0 30px rgba(255,59,59,.5)}
+
+    .msg{margin-top:20px;padding:16px 20px;border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;letter-spacing:.03em;line-height:1.6}
+    .msg.ok{background:rgba(50,200,100,.07);border:1px solid rgba(50,200,100,.28);color:#6edfa6}
+    .msg.err{background:rgba(255,59,59,.07);border:1px solid rgba(255,59,59,.28);color:#ff9999}
+
+    .siteFooter{text-align:center;padding:28px 20px;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(170,178,192,.35);border-top:1px solid var(--border)}
+    .fieldError{border-color:var(--accent)!important;box-shadow:0 0 0 3px rgba(255,59,59,.14)!important}
+  </style>
+</head>
+<body>
+
+<header class="siteHeader">
+  <div class="headerInner">
+    <div class="brand">
+      <div class="brandIcon">AD</div>
+      AD<span class="sep">|</span>FORM
+    </div>
+    <div class="headerRight">&gt; Анкета на рекламу_</div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container">
+
+    <div class="pageHead">
+      <div class="pageTag">[ заполните анкету ]</div>
+      <h1 class="pageTitle">Данные на рекламу<span class="cursor"></span></h1>
+      <p class="pageDesc">Все поля обязательны. Это поможет нам глубоко понять вашу практику и создать сильные решения.</p>
+    </div>
+
+    <div class="progressWrap">
+      <div class="progressMeta">
+        <span>Прогресс</span>
+        <span><span class="cur" id="progressText">Шаг 1</span>&nbsp;/ 4</span>
+      </div>
+      <div class="progressTrack">
+        <div class="progressFill" id="progressFill" style="width:25%"></div>
+      </div>
+      <div class="stepDots">
+        <div class="stepDot active"></div>
+        <div class="stepDot"></div>
+        <div class="stepDot"></div>
+        <div class="stepDot"></div>
+      </div>
+    </div>
+
+    <div class="formCard">
+      <form id="form">
+        <div class="formCardInner">
+
+          <!-- STEP 1 -->
+          <section class="step active" data-title="Контакты">
+            <div class="stepHeader">
+              <div class="stepTag">Шаг 01 — Старт</div>
+              <h2 class="stepTitle">Контактные данные</h2>
+              <p class="stepDesc">Заполните — чтобы мы могли быстро связаться с вами.</p>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <label>Имя *</label>
+                <input type="text" name="name" placeholder="Как к вам обращаться" required />
+              </div>
+              <div class="field">
+                <label>Телефон / WhatsApp *</label>
+                <div class="hint">Любой формат: +380..., +7..., 0...</div>
+                <input type="tel" name="phone" placeholder="+380501234567" required />
+              </div>
+            </div>
+            <div class="field">
+              <label>Ссылки на соцсети *</label>
+              <div class="hint">Instagram, Telegram, сайт — через запятую.</div>
+              <textarea name="socials" placeholder="https://instagram.com/..." required></textarea>
+            </div>
+            <div class="field">
+              <label>Какую услугу предоставляете? *</label>
+              <input type="text" name="service" placeholder="Нумерология, коучинг, массаж..." required />
+            </div>
+          </section>
+
+          <!-- STEP 2 -->
+          <section class="step" data-title="Практика">
+            <div class="stepHeader">
+              <div class="stepTag">Шаг 02 — Практика</div>
+              <h2 class="stepTitle">Статистика и результаты</h2>
+              <p class="stepDesc">Чётко и конкретно — как вы объясняете это клиенту.</p>
+            </div>
+            <div class="field">
+              <label>Какие проблемы вы помогаете решать? *</label>
+              <textarea name="problems" placeholder="Конкретные ситуации и боли клиентов..." required></textarea>
+            </div>
+            <div class="field">
+              <label>Как ваша практика меняет жизнь к лучшему? *</label>
+              <textarea name="practice_help" placeholder="Какие изменения замечают клиенты..." required></textarea>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <label>Лет в практике *</label>
+                <div class="inputWrap">
+                  <input type="number" name="experience" min="0" step="1" placeholder="5" required />
+                  <span class="inputSuffix">лет</span>
+                </div>
+              </div>
+              <div class="field">
+                <label>Клиентов помогли *</label>
+                <div class="inputWrap">
+                  <input type="number" name="people_count" min="0" step="1" placeholder="200" required />
+                  <span class="inputSuffix">чел.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEP 3 -->
+          <section class="step" data-title="Аудитория">
+            <div class="stepHeader">
+              <div class="stepTag">Шаг 03 — Позиционирование</div>
+              <h2 class="stepTitle">Аудитория и отличия</h2>
+              <p class="stepDesc">Поможет точнее описать вашу аудиторию и сильные стороны.</p>
+            </div>
+            <div class="field">
+              <label>Возрастные ограничения? *</label>
+              <div class="radioRow">
+                <label class="radioPill"><input type="radio" name="age_limit_choice" value="нет" required><span>Нет ограничений</span></label>
+                <label class="radioPill"><input type="radio" name="age_limit_choice" value="есть" required><span>Есть ограничения</span></label>
+              </div>
+            </div>
+            <div class="field hidden" id="ageDetails">
+              <label>Уточните возрастные ограничения *</label>
+              <textarea name="age_limit" id="age_limit" placeholder="Например: не работаю с детьми до 18 лет..."></textarea>
+            </div>
+            <div class="field">
+              <label>Ограничения по полу? *</label>
+              <div class="radioRow">
+                <label class="radioPill"><input type="radio" name="gender_limit_choice" value="нет" required><span>Нет</span></label>
+                <label class="radioPill"><input type="radio" name="gender_limit_choice" value="женщины" required><span>Только женщины</span></label>
+                <label class="radioPill"><input type="radio" name="gender_limit_choice" value="мужчины" required><span>Только мужчины</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label>Идеальный клиент *</label>
+              <textarea name="ideal_client" placeholder="Возраст, ситуация, запрос, мировоззрение..." required></textarea>
+            </div>
+            <div class="field">
+              <label>Чем вы отличаетесь от других специалистов? *</label>
+              <textarea name="difference" placeholder="Уникальный подход, метод, результаты..." required></textarea>
+            </div>
+            <div class="field">
+              <label>Формат работы *</label>
+              <textarea name="format" placeholder="Онлайн / оффлайн / оба формата..." required></textarea>
+            </div>
+          </section>
+
+          <!-- STEP 4 -->
+          <section class="step" data-title="Креатив">
+            <div class="stepHeader">
+              <div class="stepTag">Шаг 04 — Финал</div>
+              <h2 class="stepTitle">Тип рекламного креатива</h2>
+              <p class="stepDesc">Выберите один формат. Некоторые варианты потребуют съёмки с вашей стороны.</p>
+            </div>
+            <div class="creativeGrid" id="creativeGrid">
+              <div class="creative" data-value="Интервью">
+                <div class="creativeMedia">
+                  <img src="./interview.gif" alt="Интервью">
+                  <span class="creativeTag">ФОРМАТ 01</span>
+                </div>
+                <div class="creativeBody">
+                  <div class="creativeTitle">Интервью</div>
+                  <div class="creativeText">Вопросы → ответы. Экспертное раскрытие, доверие, глубина. Вы в кадре.</div>
+                </div>
+                <div class="creativePick">
+                  <label><input type="radio" name="creative_type" value="Интервью" required>&gt; Выбрать</label>
+                  <span class="badge">✓ Выбрано</span>
+                </div>
+              </div>
+              <div class="creative" data-value="Говорящая голова">
+                <div class="creativeMedia">
+                  <img src="./talking-head.gif" alt="Говорящая голова">
+                  <span class="creativeTag">ФОРМАТ 02</span>
+                </div>
+                <div class="creativeBody">
+                  <div class="creativeTitle">Говорящая голова</div>
+                  <div class="creativeText">Короткие тезисы в кадре. Быстрое доверие и прогрев.</div>
+                </div>
+                <div class="creativePick">
+                  <label><input type="radio" name="creative_type" value="Говорящая голова" required>&gt; Выбрать</label>
+                  <span class="badge">✓ Выбрано</span>
+                </div>
+              </div>
+              <div class="creative" data-value="История-клиента">
+                <div class="creativeMedia">
+                  <img src="./client-story.gif" alt="История клиента">
+                  <span class="creativeTag">ФОРМАТ 03</span>
+                </div>
+                <div class="creativeBody">
+                  <div class="creativeTitle">История клиента</div>
+                  <div class="creativeText">Проблема → путь → результат. Максимальная вовлечённость.</div>
+                </div>
+                <div class="creativePick">
+                  <label><input type="radio" name="creative_type" value="История-клиента" required>&gt; Выбрать</label>
+                  <span class="badge">✓ Выбрано</span>
+                </div>
+              </div>
+            </div>
+            <div id="msgOk" class="msg ok hidden">&gt; Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+            <div id="msgErr" class="msg err hidden"></div>
+          </section>
+
+        </div>
+
+        <div class="formBottom">
+          <button type="button" id="prevBtn" class="btn btnGhost" disabled>← Назад</button>
+          <div style="display:flex;gap:12px">
+            <button type="button" id="nextBtn" class="btn btnAccent">Далее →</button>
+            <button type="submit" id="submitBtn" class="btn btnAccent hidden">Отправить →</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<footer class="siteFooter">&gt; Все данные защищены и используются только для создания рекламы_</footer>
+
+<script>
+(function(){
+  const SCRIPT_URL="https://script.google.com/macros/s/AKfycbylcAIRWRG8s2WYkl3F8HPIqRqCQAWTwUeu7lg_5jcUWqMZ7MM8XpDxSte9zDXjkC4oLQ/exec";
+  const form=document.getElementById('form');
+  const steps=Array.from(document.querySelectorAll('.step'));
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const submitBtn=document.getElementById('submitBtn');
+  const progressFill=document.getElementById('progressFill');
+  const progressText=document.getElementById('progressText');
+  const dots=Array.from(document.querySelectorAll('.stepDot'));
+  const ageDetails=document.getElementById('ageDetails');
+  const ageLimit=document.getElementById('age_limit');
+  const creativeGrid=document.getElementById('creativeGrid');
+  const msgOk=document.getElementById('msgOk');
+  const msgErr=document.getElementById('msgErr');
+  let stepIndex=0;
+
+  function setProgress(){
+    progressFill.style.width=((stepIndex+1)/steps.length*100)+'%';
+    progressText.textContent='Шаг '+(stepIndex+1);
+    dots.forEach((d,i)=>{d.classList.remove('active','done');if(i===stepIndex)d.classList.add('active');else if(i<stepIndex)d.classList.add('done');});
+  }
+
+  function showStep(i){
+    steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+    stepIndex=i;
+    prevBtn.disabled=stepIndex===0;
+    const isLast=stepIndex===steps.length-1;
+    nextBtn.classList.toggle('hidden',isLast);
+    submitBtn.classList.toggle('hidden',!isLast);
+    setProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function syncAge(){
+    const v=form.querySelector('input[name="age_limit_choice"]:checked')?.value;
+    if(v==='есть'){ageDetails.classList.remove('hidden');ageLimit.required=true;}
+    else{ageDetails.classList.add('hidden');ageLimit.required=false;ageLimit.value='';}
+  }
+
+  function validateStep(){
+    syncAge();
+    const cur=steps[stepIndex];
+    const required=Array.from(cur.querySelectorAll('[required]')).filter(el=>el.offsetParent!==null);
+    for(const el of required){
+      if(el.type==='radio'){
+        const group=cur.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+        if(!Array.from(group).some(r=>r.checked)){group[0].closest('.radioRow')?.scrollIntoView({behavior:'smooth',block:'center'});return false;}
+      } else {
+        if(!String(el.value||'').trim()){el.classList.add('fieldError');el.focus();el.scrollIntoView({behavior:'smooth',block:'center'});el.addEventListener('input',()=>el.classList.remove('fieldError'),{once:true});return false;}
+      }
+    }
+    return true;
+  }
+
+  prevBtn.addEventListener('click',()=>{if(stepIndex>0)showStep(stepIndex-1);});
+  nextBtn.addEventListener('click',()=>{if(validateStep())showStep(stepIndex+1);});
+
+  document.addEventListener('change',e=>{
+    if(e.target.type==='radio'&&e.target.closest('.radioRow')){
+      const row=e.target.closest('.radioRow');
+      row.querySelectorAll('.radioPill').forEach(p=>p.classList.remove('checked'));
+      e.target.closest('.radioPill')?.classList.add('checked');
+    }
+    if(e.target.name==='age_limit_choice')syncAge();
+    if(e.target.name==='creative_type'){
+      document.querySelectorAll('.creative').forEach(c=>c.classList.toggle('selected',c.dataset.value===e.target.value));
+    }
+  });
+
+  creativeGrid.addEventListener('click',e=>{
+    const card=e.target.closest('.creative');
+    if(!card)return;
+    const radio=card.querySelector('input[type="radio"][name="creative_type"]');
+    if(radio){radio.checked=true;radio.dispatchEvent(new Event('change',{bubbles:true}));}
+  });
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();syncAge();
+    const vis=Array.from(form.querySelectorAll('[required]')).filter(el=>el.offsetParent!==null);
+    for(const el of vis){
+      if(el.type==='radio'){const g=form.querySelectorAll(`input[type="radio"][name="${el.name}"]`);if(!Array.from(g).some(r=>r.checked)){el.scrollIntoView({behavior:'smooth',block:'center'});return;}}
+      else{if(!String(el.value||'').trim()){el.focus();return;}}
+    }
+    submitBtn.disabled=true;submitBtn.textContent='> Отправляем...';
+    msgOk.classList.add('hidden');msgErr.classList.add('hidden');
+    try{
+      const resp=await fetch(SCRIPT_URL,{method:'POST',body:new FormData(form)});
+      const data=await resp.json().catch(()=>null);
+      if(!resp.ok)throw new Error('HTTP '+resp.status);
+      if(!data||data.status!=='success')throw new Error(data?.message||'Unknown error');
+      msgOk.classList.remove('hidden');msgOk.scrollIntoView({behavior:'smooth',block:'start'});
+      Array.from(form.elements).forEach(el=>el.disabled=true);
+    }catch(err){
+      msgErr.textContent='> Ошибка отправки. Попробуйте ещё раз.\n'+String(err);
+      msgErr.classList.remove('hidden');
+    }finally{
+      submitBtn.disabled=false;submitBtn.textContent='Отправить →';
+    }
+  });
+
+  setProgress();showStep(0);
+})();
+</script>
+</body>
+</html>
