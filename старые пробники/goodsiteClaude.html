@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Анкета — Данные на рекламу</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dim: rgba(201,168,76,0.18);
+      --dark: #0D0D0D;
+      --dark2: #151515;
+      --dark3: #1E1E1E;
+      --dark4: #272727;
+      --border: rgba(201,168,76,0.25);
+      --text: #F0EDE6;
+      --text-muted: #8A8577;
+      --radius: 16px;
+      --transition: .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 20%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 85% 80%, rgba(201,168,76,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Noise texture overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+    }
+
+    @media (max-width: 900px) {
+      .page-wrapper { grid-template-columns: 1fr; }
+    }
+
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: var(--dark2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 48px 36px;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .left-panel {
+        position: relative;
+        height: auto;
+        padding: 32px 24px 24px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-icon svg { width: 20px; height: 20px; fill: var(--dark); }
+
+    .brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: .08em;
+      color: var(--text);
+    }
+
+    .left-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      line-height: 1.0;
+      letter-spacing: .02em;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .left-title span { color: var(--gold); }
+
+    .left-desc {
+      font-size: .9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    /* Step nav */
+    .step-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+
+    .step-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      cursor: default;
+      transition: background var(--transition);
+      position: relative;
+    }
+
+    .step-nav-item.active {
+      background: var(--gold-dim);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .step-nav-item.active .step-num {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+    }
+
+    .step-nav-item.done .step-num {
+      background: transparent;
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .step-nav-item.done .step-num::after {
+      content: '✓';
+    }
+
+    .step-nav-item.done .step-num span { display: none; }
+
+    .step-nav-text {}
+    .step-nav-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .step-nav-item.active .step-nav-label { color: var(--gold); }
+    .step-nav-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 1px;
+    }
+    .step-nav-item:not(.active) .step-nav-title { color: var(--text-muted); }
+
+    .left-bottom {
+      margin-top: auto;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: .8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel {
+      padding: 48px 56px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 1100px) {
+      .right-panel { padding: 40px 32px; }
+    }
+
+    @media (max-width: 900px) {
+      .right-panel { padding: 24px 20px 40px; min-height: auto; }
+    }
+
+    /* Progress bar top */
+    .progress-bar-wrap {
+      height: 3px;
+      background: var(--dark4);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 99px;
+      transition: width .4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Step content */
+    .step { display: none; }
+    .step.active {
+      display: block;
+      animation: stepIn .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateX(18px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .step-header { margin-bottom: 36px; }
+
+    .step-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .step-tag::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--gold);
+    }
+
+    .step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      line-height: 1.0;
+      letter-spacing: .02em;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .step-desc {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Fields */
+    .grid2 { display: grid; gap: 20px 24px; }
+    @media (min-width: 700px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+
+    .field { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      line-height: 1.5;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--dark3);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      color: var(--text);
+      font: 500 .95rem/1 'Montserrat', sans-serif;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      -webkit-appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    input:focus, textarea:focus {
+      border-color: var(--gold);
+      background: var(--dark4);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+
+    textarea { min-height: 96px; resize: vertical; line-height: 1.6; }
+
+    /* Number inputs with stat display */
+    .stat-input-wrap {
+      position: relative;
+    }
+
+    .stat-input-wrap input {
+      padding-right: 100px;
+    }
+
+    .stat-suffix {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Radio pills */
+    .radio-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .radio-row label {
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 10px 18px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      background: var(--dark3);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition);
+    }
+
+    .radio-row label:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+
+    .radio-row input[type="radio"] { display: none; }
+
+    .radio-row input[type="radio"]:checked + span,
+    .radio-row label:has(input:checked) {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    /* trick: style the label itself when its radio is checked */
+    .radio-pill { cursor: pointer; }
+    .radio-pill input { display: none; }
+
+    .hidden { display: none !important; }
+
+    /* ── CREATIVE CARDS ── */
+    .creative-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .creative {
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      background: var(--dark3);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .creative:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+
+    .creative.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), 0 12px 40px rgba(201,168,76,0.2);
+    }
+
+    .creative-media {
+      height: 160px;
+      background: var(--dark4);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .creative-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(.85);
+      transition: filter var(--transition), transform var(--transition);
+    }
+
+    .creative:hover .creative-media img {
+      filter: brightness(1);
+      transform: scale(1.03);
+    }
+
+    .creative.selected .creative-media img { filter: brightness(1); }
+
+    .creative-body {
+      padding: 16px 18px;
+      flex: 1;
+    }
+
+    .creative-title {
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .creative.selected .creative-title { color: var(--gold); }
+
+    .creative-text {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .creative-pick {
+      padding: 12px 18px 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .creative-pick label {
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .creative.selected .creative-pick label { color: var(--gold); }
+
+    .badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 999px;
+      display: none;
+    }
+
+    .creative.selected .badge { display: inline-flex; }
+
+    /* ── BOTTOM NAV ── */
+    .form-bottom {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font: 700 .88rem/1 'Montserrat', sans-serif;
+      letter-spacing: .04em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all var(--transition);
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.4); }
+    .btn:disabled { opacity: .4; cursor: default; transform: none; box-shadow: none; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .btn-gold:hover { background: var(--gold-light); }
+
+    /* Messages */
+    .msg {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .msg.ok {
+      background: rgba(100,200,100,0.12);
+      border: 1.5px solid rgba(100,200,100,0.4);
+      color: #88e088;
+    }
+
+    .msg.err {
+      background: rgba(255,80,80,0.1);
+      border: 1.5px solid rgba(255,80,80,0.35);
+      color: #ff9999;
+    }
+
+    /* Decorative accent number */
+    .big-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 9rem;
+      line-height: 1;
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      color: rgba(201,168,76,0.06);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -.02em;
+    }
+
+    .step-header { position: relative; }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- LEFT PANEL -->
+  <aside class="left-panel">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="brand-name">AdForm</span>
+    </div>
+
+    <h1 class="left-title">Данные<br>на <span>рекламу</span></h1>
+    <p class="left-desc">Заполните анкету — это поможет нам глубоко понять вашу практику и создать сильные рекламные решения.</p>
+
+    <nav class="step-nav" id="stepNav">
+      <div class="step-nav-item active" data-step="0">
+        <div class="step-num"><span>1</span></div>
+        <div class="step-nav-text">
+          <div class="step-nav-label">Шаг 1</div>
+          <div class="step-nav-title">Контакты</div>
+        </div>
+      </div>
+      <div class="step-nav-item" data-step="1">
+        <div class="step-num"><span>2</span></div>
+        <div class="step-nav-text">
+          <div class="step-nav-label">Шаг 2</div>
+          <div class="step-nav-title">Практика</div>
+        </div>
+      </div>
+      <div class="step-nav-item" data-step="2">
+        <div class="step-num"><span>3</span></div>
+        <div class="step-nav-text">
+          <div class="step-nav-label">Шаг 3</div>
+          <div class="step-nav-title">Аудитория</div>
+        </div>
+      </div>
+      <div class="step-nav-item" data-step="3">
+        <div class="step-num"><span>4</span></div>
+        <div class="step-nav-text">
+          <div class="step-nav-label">Шаг 4</div>
+          <div class="step-nav-title">Креатив</div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="left-bottom">
+      Все данные защищены и используются<br>только для создания вашей рекламы.
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL -->
+  <main class="right-panel">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:25%"></div>
+    </div>
+
+    <form id="form">
+
+      <!-- STEP 1 — Contacts -->
+      <section class="step active" data-title="Контакты">
+        <div class="step-header">
+          <div class="big-num">01</div>
+          <div class="step-tag">Начало</div>
+          <h2 class="step-title">Контактные<br>данные</h2>
+          <p class="step-desc">Заполните — чтобы мы могли быстро связаться с вами.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Как к вам обращаться *</label>
+            <input type="text" name="name" placeholder="Иван" required />
+          </div>
+          <div class="field">
+            <label>Телефон / WhatsApp *</label>
+            <div class="hint">Любой формат: +380..., +7..., 0...</div>
+            <input type="tel" name="phone" placeholder="+380501234567" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Ссылки на соцсети *</label>
+          <div class="hint">Instagram, Telegram, сайт — через запятую.</div>
+          <textarea name="socials" placeholder="https://instagram.com/..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Какую услугу предоставляете? *</label>
+          <input type="text" name="service" placeholder="Например: нумерология, коучинг, массаж..." required />
+        </div>
+      </section>
+
+      <!-- STEP 2 — Practice -->
+      <section class="step" data-title="Практика">
+        <div class="step-header">
+          <div class="big-num">02</div>
+          <div class="step-tag">Ваша практика</div>
+          <h2 class="step-title">Статистика<br>и результаты</h2>
+          <p class="step-desc">Чётко и конкретно — как вы бы объяснили это клиенту.</p>
+        </div>
+
+        <div class="field">
+          <label>Какие проблемы вы помогаете решать? *</label>
+          <textarea name="problems" placeholder="Опишите конкретные ситуации и боли клиентов..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Как ваша практика меняет жизнь к лучшему? *</label>
+          <textarea name="practice_help" placeholder="Какие изменения замечают клиенты после работы с вами..." required></textarea>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Лет в практике *</label>
+            <div class="stat-input-wrap">
+              <input type="number" name="experience" min="0" step="1" placeholder="5" required />
+              <span class="stat-suffix">лет</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Клиентов помогли *</label>
+            <div class="stat-input-wrap">
+              <input type="number" name="people_count" min="0" step="1" placeholder="200" required />
+              <span class="stat-suffix">чел.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 — Audience -->
+      <section class="step" data-title="Аудитория">
+        <div class="step-header">
+          <div class="big-num">03</div>
+          <div class="step-tag">Позиционирование</div>
+          <h2 class="step-title">Аудитория<br>и отличия</h2>
+          <p class="step-desc">Поможет точнее описать вашу аудиторию и сильные стороны.</p>
+        </div>
+
+        <div class="field">
+          <label>Есть ли возрастные ограничения? *</label>
+          <div class="radio-row" id="ageRadios">
+            <label class="radio-pill">
+              <input type="radio" name="age_limit_choice" value="нет" required>
+              <span>Нет ограничений</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="age_limit_choice" value="есть" required>
+              <span>Есть ограничения</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field hidden" id="ageDetails">
+          <label>Уточните возрастные ограничения *</label>
+          <textarea name="age_limit" id="age_limit" placeholder="Например: не работаю с детьми до 18 лет..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Ограничения по полу клиентов? *</label>
+          <div class="radio-row">
+            <label class="radio-pill"><input type="radio" name="gender_limit_choice" value="нет" required><span>Нет</span></label>
+            <label class="radio-pill"><input type="radio" name="gender_limit_choice" value="женщины" required><span>Только женщины</span></label>
+            <label class="radio-pill"><input type="radio" name="gender_limit_choice" value="мужчины" required><span>Только мужчины</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Опишите идеального клиента *</label>
+          <textarea name="ideal_client" placeholder="Возраст, ситуация, запрос, мировоззрение..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Чем вы отличаетесь от других специалистов? *</label>
+          <textarea name="difference" placeholder="Ваш уникальный подход, метод, результаты..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Формат работы *</label>
+          <textarea name="format" placeholder="Онлайн / оффлайн / оба формата..." required></textarea>
+        </div>
+      </section>
+
+      <!-- STEP 4 — Creative -->
+      <section class="step" data-title="Креатив">
+        <div class="step-header">
+          <div class="big-num">04</div>
+          <div class="step-tag">Финальный шаг</div>
+          <h2 class="step-title">Тип рекламного<br>креатива</h2>
+          <p class="step-desc">Выберите один формат. Некоторые варианты потребуют съёмки с вашей стороны.</p>
+        </div>
+
+        <div class="creative-grid" id="creativeGrid">
+          <div class="creative" data-value="Интервью">
+            <div class="creative-media"><img src="./interview.gif" alt="Интервью"></div>
+            <div class="creative-body">
+              <div class="creative-title">Интервью</div>
+              <div class="creative-text">Вопросы → ответы. Экспертное раскрытие, доверие, глубина. Вы в кадре.</div>
+            </div>
+            <div class="creative-pick">
+              <label>
+                <input type="radio" name="creative_type" value="Интервью" required>
+                Выбрать формат
+              </label>
+              <span class="badge">Выбрано ✓</span>
+            </div>
+          </div>
+
+          <div class="creative" data-value="Говорящая голова">
+            <div class="creative-media"><img src="./talking-head.gif" alt="Говорящая голова"></div>
+            <div class="creative-body">
+              <div class="creative-title">Говорящая голова</div>
+              <div class="creative-text">Короткие тезисы в кадре. Быстрое доверие и прогрев.</div>
+            </div>
+            <div class="creative-pick">
+              <label>
+                <input type="radio" name="creative_type" value="Говорящая голова" required>
+                Выбрать формат
+              </label>
+              <span class="badge">Выбрано ✓</span>
+            </div>
+          </div>
+
+          <div class="creative" data-value="История-клиента">
+            <div class="creative-media"><img src="./client-story.gif" alt="История клиента"></div>
+            <div class="creative-body">
+              <div class="creative-title">История клиента</div>
+              <div class="creative-text">Проблема → путь → результат. Максимальная вовлечённость.</div>
+            </div>
+            <div class="creative-pick">
+              <label>
+                <input type="radio" name="creative_type" value="История-клиента" required>
+                Выбрать формат
+              </label>
+              <span class="badge">Выбрано ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="msgOk" class="msg ok hidden">🎉 Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+        <div id="msgErr" class="msg err hidden"></div>
+      </section>
+
+      <!-- Bottom nav -->
+      <div class="form-bottom">
+        <button type="button" id="prevBtn" class="btn btn-ghost" disabled>← Назад</button>
+        <div style="display:flex;gap:12px;">
+          <button type="button" id="nextBtn" class="btn btn-gold">Далее →</button>
+          <button type="submit" id="submitBtn" class="btn btn-gold hidden">Отправить анкету →</button>
+        </div>
+      </div>
+
+    </form>
+  </main>
+</div>
+
+<script>
+(function(){
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylcAIRWRG8s2WYkl3F8HPIqRqCQAWTwUeu7lg_5jcUWqMZ7MM8XpDxSte9zDXjkC4oLQ/exec";
+
+  const form = document.getElementById('form');
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const progressFill = document.getElementById('progressFill');
+  const navItems = Array.from(document.querySelectorAll('.step-nav-item'));
+
+  const ageDetails = document.getElementById('ageDetails');
+  const ageLimit = document.getElementById('age_limit');
+  const creativeGrid = document.getElementById('creativeGrid');
+  const msgOk = document.getElementById('msgOk');
+  const msgErr = document.getElementById('msgErr');
+
+  let stepIndex = 0;
+
+  function setProgress() {
+    const pct = ((stepIndex + 1) / steps.length) * 100;
+    progressFill.style.width = pct + '%';
+
+    navItems.forEach((item, i) => {
+      item.classList.remove('active', 'done');
+      if (i === stepIndex) item.classList.add('active');
+      else if (i < stepIndex) item.classList.add('done');
+    });
+  }
+
+  function showStep(i) {
+    steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    stepIndex = i;
+    prevBtn.disabled = stepIndex === 0;
+    const isLast = stepIndex === steps.length - 1;
+    nextBtn.classList.toggle('hidden', isLast);
+    submitBtn.classList.toggle('hidden', !isLast);
+    setProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function syncConditionalRequired() {
+    const ageChoice = form.querySelector('input[name="age_limit_choice"]:checked')?.value;
+    if (ageChoice === 'есть') {
+      ageDetails.classList.remove('hidden');
+      ageLimit.required = true;
+    } else {
+      ageDetails.classList.add('hidden');
+      ageLimit.required = false;
+      ageLimit.value = '';
+    }
+  }
+
+  function validateCurrentStep() {
+    syncConditionalRequired();
+    const currentStep = steps[stepIndex];
+    const required = Array.from(currentStep.querySelectorAll('[required]'))
+      .filter(el => el.offsetParent !== null);
+
+    for (const el of required) {
+      if (el.type === 'radio') {
+        const group = currentStep.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+        const ok = Array.from(group).some(r => r.checked);
+        if (!ok) {
+          group[0].closest('.field')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Highlight
+          group[0].closest('.radio-row')?.classList.add('shake');
+          setTimeout(() => group[0].closest('.radio-row')?.classList.remove('shake'), 600);
+          return false;
+        }
+      } else {
+        if (!String(el.value || '').trim()) {
+          el.focus();
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.borderColor = '#ff6b6b';
+          el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  prevBtn.addEventListener('click', () => { if (stepIndex > 0) showStep(stepIndex - 1); });
+  nextBtn.addEventListener('click', () => { if (validateCurrentStep()) showStep(stepIndex + 1); });
+
+  // Radio pill styling
+  document.addEventListener('change', e => {
+    if (e.target.type === 'radio' && e.target.closest('.radio-row')) {
+      const row = e.target.closest('.radio-row');
+      row.querySelectorAll('label').forEach(l => {
+        l.style.borderColor = '';
+        l.style.background = '';
+        l.style.color = '';
+      });
+      const lbl = e.target.closest('label');
+      if (lbl) {
+        lbl.style.borderColor = 'var(--gold)';
+        lbl.style.background = 'var(--gold-dim)';
+        lbl.style.color = 'var(--gold)';
+      }
+    }
+
+    if (e.target.name === 'age_limit_choice') syncConditionalRequired();
+
+    if (e.target.name === 'creative_type') {
+      const val = e.target.value;
+      document.querySelectorAll('.creative').forEach(c => {
+        c.classList.toggle('selected', c.dataset.value === val);
+      });
+    }
+  });
+
+  creativeGrid.addEventListener('click', e => {
+    const card = e.target.closest('.creative');
+    if (!card) return;
+    const radio = card.querySelector('input[type="radio"][name="creative_type"]');
+    if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change', { bubbles: true })); }
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    syncConditionalRequired();
+
+    const visibleRequired = Array.from(form.querySelectorAll('[required]'))
+      .filter(el => el.offsetParent !== null);
+
+    for (const el of visibleRequired) {
+      if (el.type === 'radio') {
+        const group = form.querySelectorAll(`input[type="radio"][name="${el.name}"]`);
+        if (!Array.from(group).some(r => r.checked)) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      } else {
+        if (!String(el.value || '').trim()) { el.focus(); return; }
+      }
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем...';
+    msgOk.classList.add('hidden');
+    msgErr.classList.add('hidden');
+
+    try {
+      const resp = await fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) });
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      if (!data || data.status !== 'success') throw new Error(data?.message || 'Unknown error');
+
+      msgOk.classList.remove('hidden');
+      msgOk.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      Array.from(form.elements).forEach(el => el.disabled = true);
+    } catch (err) {
+      msgErr.textContent = 'Не получилось отправить анкету. Попробуйте ещё раз.\nОшибка: ' + String(err);
+      msgErr.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Отправить анкету →';
+    }
+  });
+
+  setProgress();
+  showStep(0);
+})();
+</script>
+</body>
+</html>
