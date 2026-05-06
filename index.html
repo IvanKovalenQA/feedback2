@@ -501,9 +501,8 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
 <script>
 (function(){
   const ASSISTANT_ID = 'asst_QtOk7Ym9O8r1Yzh3gWF9DYq5';
-  const API_KEY = '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';
-  const BASE = 'https://api.openai.com/v1';
-  const HEADERS = {'Content-Type':'application/json','Authorization':'Bearer '+API_KEY,'OpenAI-Beta':'assistants=v2'};
+  const BASE = 'https://wild-mountain-ec10.ivankovalenqa.workers.dev';
+  const HEADERS = {'Content-Type':'application/json','OpenAI-Beta':'assistants=v2'};
 
   let threadId = null;
   let isTyping = false;
@@ -529,7 +528,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
   async function initThread(){
     try {
       addMsg('bot','👋 Привет! Я Илья, ассистент агентства Tandem Marketing.\n\nПомогу ответить на вопросы о таргетированной рекламе и рассказать как мы работаем. Спрашивайте! 😊');
-      const res = await fetch(BASE+'/threads', {method:'POST', headers:HEADERS, body:'{}'});
+      const res = await fetch(BASE+'/v1/threads', {method:'POST', headers:HEADERS, body:'{}'});
       const data = await res.json();
       threadId = data.id;
     } catch(e) {
@@ -549,13 +548,13 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
 
     try {
       // Добавляем сообщение в тред
-      await fetch(BASE+'/threads/'+threadId+'/messages', {
+      await fetch(BASE+'/v1/threads/'+threadId+'/messages', {
         method:'POST', headers:HEADERS,
         body: JSON.stringify({role:'user', content:text})
       });
 
       // Запускаем ассистента
-      const runRes = await fetch(BASE+'/threads/'+threadId+'/runs', {
+      const runRes = await fetch(BASE+'/v1/threads/'+threadId+'/runs', {
         method:'POST', headers:HEADERS,
         body: JSON.stringify({assistant_id: ASSISTANT_ID})
       });
@@ -567,14 +566,14 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
       let attempts = 0;
       while(status !== 'completed' && status !== 'failed' && attempts < 30){
         await sleep(1000);
-        const poll = await fetch(BASE+'/threads/'+threadId+'/runs/'+runId, {headers:HEADERS});
+        const poll = await fetch(BASE+'/v1/threads/'+threadId+'/runs/'+runId, {headers:HEADERS});
         const pollData = await poll.json();
         status = pollData.status;
         attempts++;
       }
 
       if(status === 'completed'){
-        const msgsRes = await fetch(BASE+'/threads/'+threadId+'/messages?limit=1&order=desc', {headers:HEADERS});
+        const msgsRes = await fetch(BASE+'/v1/threads/'+threadId+'/messages?limit=1&order=desc', {headers:HEADERS});
         const msgsData = await msgsRes.json();
         const reply = msgsData.data?.[0]?.content?.[0]?.text?.value || 'Не получил ответ, попробуйте ещё раз.';
         hideTyping();
