@@ -82,7 +82,7 @@ section{position:relative;z-index:1;padding:90px 5vw}
 .gal-sec{background:var(--d2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
 .gal-hd{max-width:1100px;margin:0 auto 48px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
 .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;max-width:1100px;margin:0 auto}
-.gal-card{border-radius:20px;overflow:hidden;background:var(--d3);border:1px solid var(--bdim);transition:all var(--e);aspect-ratio:9/14;position:relative;cursor:pointer}
+.gal-card{border-radius:20px;overflow:hidden;background:var(--d3);border:1px solid var(--bdim);transition:all var(--e);aspect-ratio:16/10;position:relative;cursor:pointer}
 .gal-card:hover{border-color:var(--bdr);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
 .gal-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88);transition:filter var(--e),transform var(--e)}
 .gal-card:hover .gal-img{filter:brightness(1);transform:scale(1.03)}
@@ -97,9 +97,9 @@ section{position:relative;z-index:1;padding:90px 5vw}
 .rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-width:1100px;margin:0 auto}
 .rev-card{border-radius:20px;overflow:hidden;background:var(--d3);border:1px solid var(--bdim);transition:all var(--e);cursor:pointer}
 .rev-card:hover{border-color:var(--bdr);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
-.rev-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:brightness(.88);transition:filter var(--e)}
+.rev-img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center top;display:block;filter:brightness(.88);transition:filter var(--e)}
 .rev-card:hover .rev-img{filter:brightness(1)}
-.rev-ph{width:100%;aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mu);background:linear-gradient(135deg,var(--d3),var(--d4))}
+.rev-ph{width:100%;aspect-ratio:16/10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mu);background:linear-gradient(135deg,var(--d3),var(--d4))}
 .rev-ph svg{width:34px;height:34px;opacity:.3;stroke:currentColor;fill:none;stroke-width:1.5}
 .rev-ph span{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.4}
 .rev-body{padding:16px}
@@ -257,7 +257,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
     <div class="hero-stats">
       <div><div class="sn">8 лет</div><div class="sl">Команда в таргете</div></div>
       <div><div class="sn">15–25</div><div class="sl">Клиентов в месяц</div></div>
-      <div><div class="sn">1000+</div><div class="sl">Довольных клиентов</div></div>
+      <div><div class="sn">50+</div><div class="sl">Довольных клиентов</div></div>
     </div>
   </div>
 </section>
@@ -265,11 +265,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
 <section class="about" id="about">
   <div class="about-in">
     <div class="img-wrap">
-      <!-- Замените на реальное фото: удалите div.img-ph и добавьте <img src="./photo.jpg" style="width:100%;border-radius:24px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--bdr)"> -->
-      <img src="./photo.jpg" style="width:100%;border-radius:24px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--bdr)">>
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        <p><br><small style="opacity:.6">photo.jpg</small></p>
-      </div>
+      <img src="./PHOTO.jpg" style="width:100%;border-radius:24px;aspect-ratio:4/5;object-fit:cover;object-position:center top;border:1px solid var(--bdr);display:block" alt="Арик Сафронович">
       <div class="img-badge">Арик<br>Сафронович<br><small style="font-size:.65rem;opacity:.8;font-family:'Montserrat'">Основатель</small></div>
     </div>
     <div>
@@ -303,7 +299,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
 <section class="gal-sec" id="results">
   <div class="gal-hd"><div><div class="stag">Портфолио</div><h2 class="stitle">Реальные <span>результаты</span></h2><p class="sdesc">Скриншоты из рекламных кабинетов и кейсы клиентов.</p></div></div>
   <div class="gal-grid">
-    <div class="gal-card"><img src="./reviews/result-1.jpg" class="gal-img" alt="" onerror="this.outerHTML='<div class=gal-ph><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><path d=\'M3 9h18M9 21V9\'/></svg><span>result-1.jpg</span></div>'"><div class="gal-over"><div class="gal-lbl">Результат кампании</div></div></div>
+    <div class="gal-card"><img src="./RESULT-1.jpg" class="gal-img" alt="" onerror="this.outerHTML='<div class=gal-ph><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><path d=\'M3 9h18M9 21V9\'/></svg><span>result-1.jpg</span></div>'"><div class="gal-over"><div class="gal-lbl">Результат кампании</div></div></div>
     <div class="gal-card"><img src="./reviews/result-2.jpg" class="gal-img" alt="" onerror="this.outerHTML='<div class=gal-ph><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><path d=\'M3 9h18M9 21V9\'/></svg><span>result-2.jpg</span></div>'"><div class="gal-over"><div class="gal-lbl">Результат кампании</div></div></div>
     <div class="gal-card"><img src="./reviews/result-3.jpg" class="gal-img" alt="" onerror="this.outerHTML='<div class=gal-ph><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><path d=\'M3 9h18M9 21V9\'/></svg><span>result-3.jpg</span></div>'"><div class="gal-over"><div class="gal-lbl">Результат кампании</div></div></div>
   </div>
@@ -316,7 +312,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
     <a href="https://www.instagram.com/arikfreeman/" target="_blank" class="btn-ol" style="font-size:.78rem;padding:10px 20px">Все в Instagram →</a>
   </div>
   <div class="rev-grid">
-    <div class="rev-card"><img src="./reviews/review-1.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-1.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 1</div><div class="rev-niche">Укажите нишу</div></div></div>
+    <div class="rev-card"><img src="./REVIEW-1.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-1.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 1</div><div class="rev-niche">Массаж</div></div></div>
     <div class="rev-card"><img src="./reviews/review-2.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-2.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 2</div><div class="rev-niche">Укажите нишу</div></div></div>
     <div class="rev-card"><img src="./reviews/review-3.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-3.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 3</div><div class="rev-niche">Укажите нишу</div></div></div>
   </div>
