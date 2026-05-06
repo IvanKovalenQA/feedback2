@@ -5,6 +5,19 @@
 <title>Tandem Marketing — Таргетированная реклама</title>
 <meta name="description" content="Tandem Marketing — команда таргетологов с 8-летним опытом. Помогаем специалистам из сферы услуг получать стабильный поток клиентов через Instagram и Facebook Ads."/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1795602850637614');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1795602850637614&ev=PageView&noscript=1"/></noscript>
+<!-- End Facebook Pixel -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--gold:#C9A84C;--gl:#E8C96A;--gd:rgba(201,168,76,.15);--dark:#0D0D0D;--d2:#111;--d3:#181818;--d4:#222;--bdr:rgba(201,168,76,.22);--bdim:rgba(255,255,255,.07);--tx:#F0EDE6;--mu:#8A8577;--e:.22s cubic-bezier(.4,0,.2,1)}
@@ -420,6 +433,7 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
       });
       const data = await response.json();
       if (response.ok) {
+        fbq('track', 'Lead');
         msgOk.classList.remove('hidden');
         msgOk.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         Array.from(form.elements).forEach(el => el.disabled = true);
