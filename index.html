@@ -97,9 +97,9 @@ section{position:relative;z-index:1;padding:90px 5vw}
 .rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-width:1100px;margin:0 auto}
 .rev-card{border-radius:20px;overflow:hidden;background:var(--d3);border:1px solid var(--bdim);transition:all var(--e);cursor:pointer}
 .rev-card:hover{border-color:var(--bdr);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
-.rev-img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center center;display:block;filter:brightness(.88);transition:filter var(--e)}
+.rev-img{width:100%;aspect-ratio:3/2;object-fit:contain;background:var(--d4);display:block;filter:brightness(.95);transition:filter var(--e)}
 .rev-card:hover .rev-img{filter:brightness(1)}
-.rev-ph{width:100%;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mu);background:linear-gradient(135deg,var(--d3),var(--d4))}
+.rev-ph{width:100%;aspect-ratio:3/2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mu);background:linear-gradient(135deg,var(--d3),var(--d4))}
 .rev-ph svg{width:34px;height:34px;opacity:.3;stroke:currentColor;fill:none;stroke-width:1.5}
 .rev-ph span{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.4}
 .rev-body{padding:16px}
@@ -312,9 +312,9 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
     <a href="https://www.instagram.com/arikfreeman/" target="_blank" class="btn-ol" style="font-size:.78rem;padding:10px 20px">Все в Instagram →</a>
   </div>
   <div class="rev-grid">
-    <div class="rev-card" onclick="openLightbox('./REVIEW-1.jpg')" style="cursor:zoom-in"><img src="./REVIEW-1.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Александр</div><div class="rev-niche">Массаж · Израиль</div></div></div>
-    <div class="rev-card" onclick="openLightbox('./REVIEW-2.jpg')" style="cursor:zoom-in"><img src="./REVIEW-2.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиент</div><div class="rev-niche">40 звонков за неделю</div></div></div>
-    <div class="rev-card" onclick="openLightbox('./REVIEW-3.jpg')" style="cursor:zoom-in"><img src="./REVIEW-3.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиент</div><div class="rev-niche">6-7 пациентов с рекламы</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-1.jpg')" style="cursor:zoom-in"><img src="./REVIEW-1.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиентка</div><div class="rev-niche">Первая клиентка в день запуска</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-2.jpg')" style="cursor:zoom-in"><img src="./REVIEW-2.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиентка</div><div class="rev-niche">9 клиентов за неполный месяц</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-3.jpg')" style="cursor:zoom-in"><img src="./REVIEW-3.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Елена · Петах Тиква</div><div class="rev-niche">5 записей на массаж лица</div></div></div>
   </div>
 </section>
 
