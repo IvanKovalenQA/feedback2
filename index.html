@@ -312,11 +312,17 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
     <a href="https://www.instagram.com/arikfreeman/" target="_blank" class="btn-ol" style="font-size:.78rem;padding:10px 20px">Все в Instagram →</a>
   </div>
   <div class="rev-grid">
-    <div class="rev-card"><img src="./REVIEW-1.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-1.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 1</div><div class="rev-niche">Массаж</div></div></div>
-    <div class="rev-card"><img src="./reviews/review-2.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-2.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 2</div><div class="rev-niche">Укажите нишу</div></div></div>
-    <div class="rev-card"><img src="./reviews/review-3.jpg" class="rev-img" alt="" onerror="this.outerHTML='<div class=rev-ph><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\'/></svg><span>review-3.jpg</span></div>'"><div class="rev-body"><div class="rev-name">Клиент 3</div><div class="rev-niche">Укажите нишу</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-1.jpg')" style="cursor:zoom-in"><img src="./REVIEW-1.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Александр</div><div class="rev-niche">Массаж · Израиль</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-2.jpg')" style="cursor:zoom-in"><img src="./REVIEW-2.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиент</div><div class="rev-niche">40 звонков за неделю</div></div></div>
+    <div class="rev-card" onclick="openLightbox('./REVIEW-3.jpg')" style="cursor:zoom-in"><img src="./REVIEW-3.jpg" class="rev-img" alt=""><div class="rev-body"><div class="rev-name">Клиент</div><div class="rev-niche">6-7 пациентов с рекламы</div></div></div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;cursor:zoom-out">
+  <img id="lightbox-img" src="" style="max-width:90vw;max-height:90vh;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.8);object-fit:contain">
+  <div style="position:absolute;top:20px;right:28px;color:white;font-size:2rem;cursor:pointer;opacity:.7" onclick="closeLightbox()">✕</div>
+</div>
 
 <section style="background:var(--d2);border-top:1px solid var(--bdr)">
   <div style="max-width:1100px;margin:0 auto"><div class="stag">Процесс</div><h2 class="stitle">Как мы <span>работаем</span></h2></div>
@@ -423,6 +429,20 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
     });
   });
+
+  // Lightbox
+  window.openLightbox = function(src) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeLightbox = function() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 })();
 </script>
 
