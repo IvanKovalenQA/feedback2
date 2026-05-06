@@ -425,5 +425,208 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
   });
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════
+     TANDEM MARKETING — AI CHAT WIDGET (Илья)
+═══════════════════════════════════════════ -->
+<style>
+#tm-chat-btn{position:fixed;bottom:28px;right:28px;z-index:9999;width:60px;height:60px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;box-shadow:0 8px 32px rgba(201,168,76,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
+#tm-chat-btn:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(201,168,76,.6)}
+#tm-chat-btn svg{width:28px;height:28px;fill:var(--dark);transition:opacity .2s}
+#tm-chat-btn .ic-close{display:none}
+#tm-chat-btn.open .ic-chat{display:none}
+#tm-chat-btn.open .ic-close{display:block}
+#tm-chat-notif{position:fixed;bottom:96px;right:28px;z-index:9998;background:var(--d3);border:1px solid var(--bdr);border-radius:16px;padding:12px 16px;font-size:.82rem;color:var(--tx);box-shadow:0 8px 32px rgba(0,0,0,.4);max-width:220px;line-height:1.5;animation:notif-in .4s cubic-bezier(.4,0,.2,1)}
+#tm-chat-notif::after{content:'';position:absolute;bottom:-7px;right:22px;width:12px;height:12px;background:var(--d3);border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);transform:rotate(45deg)}
+@keyframes notif-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#tm-chat-box{position:fixed;bottom:100px;right:28px;z-index:9997;width:370px;max-width:calc(100vw - 40px);height:520px;max-height:calc(100vh - 140px);background:var(--d2);border:1px solid var(--bdr);border-radius:24px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .25s}
+#tm-chat-box.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.tm-chat-head{background:var(--dark);border-bottom:1px solid var(--bdr);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.tm-chat-avatar{width:40px;height:40px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--dark);flex-shrink:0}
+.tm-chat-info{flex:1}
+.tm-chat-name{font-weight:700;font-size:.9rem;margin-bottom:2px}
+.tm-chat-status{font-size:.72rem;color:var(--gold);display:flex;align-items:center;gap:5px}
+.tm-chat-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+.tm-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.tm-msgs::-webkit-scrollbar{width:4px}
+.tm-msgs::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.tm-msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.85rem;line-height:1.55;word-break:break-word;animation:msg-in .2s ease}
+@keyframes msg-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tm-msg.bot{background:var(--d3);border:1px solid var(--bdim);color:var(--tx);border-bottom-left-radius:4px;align-self:flex-start}
+.tm-msg.user{background:var(--gold);color:var(--dark);border-bottom-right-radius:4px;align-self:flex-end;font-weight:600}
+.tm-typing{display:flex;gap:4px;align-items:center;padding:12px 14px;background:var(--d3);border:1px solid var(--bdim);border-radius:16px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content}
+.tm-typing span{width:7px;height:7px;border-radius:50%;background:var(--mu);animation:dot .9s infinite}
+.tm-typing span:nth-child(2){animation-delay:.18s}
+.tm-typing span:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.tm-input-row{padding:12px 14px;border-top:1px solid var(--bdr);display:flex;gap:8px;flex-shrink:0;background:var(--dark)}
+#tm-input{flex:1;background:var(--d3);border:1.5px solid var(--bdim);border-radius:12px;padding:10px 14px;color:var(--tx);font:500 .85rem/1.4 'Montserrat',sans-serif;outline:none;resize:none;max-height:80px;overflow-y:auto;transition:border-color .2s}
+#tm-input:focus{border-color:var(--bdr)}
+#tm-input::placeholder{color:rgba(255,255,255,.2)}
+#tm-send{width:40px;height:40px;border-radius:12px;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,transform .15s}
+#tm-send:hover{background:var(--gl);transform:scale(1.06)}
+#tm-send svg{width:18px;height:18px;fill:var(--dark)}
+#tm-send:disabled{opacity:.4;cursor:default;transform:none}
+</style>
+
+<!-- Нотификация -->
+<div id="tm-chat-notif">
+  💬 Привет! Я Илья — помогу ответить на вопросы о рекламе
+</div>
+
+<!-- Кнопка -->
+<button id="tm-chat-btn" aria-label="Открыть чат">
+  <svg class="ic-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <svg class="ic-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="var(--dark)" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+</button>
+
+<!-- Чат -->
+<div id="tm-chat-box">
+  <div class="tm-chat-head">
+    <div class="tm-chat-avatar">И</div>
+    <div class="tm-chat-info">
+      <div class="tm-chat-name">Илья · Tandem Marketing</div>
+      <div class="tm-chat-status">Онлайн</div>
+    </div>
+  </div>
+  <div class="tm-msgs" id="tm-msgs"></div>
+  <div class="tm-input-row">
+    <textarea id="tm-input" rows="1" placeholder="Написать сообщение..."></textarea>
+    <button id="tm-send">
+      <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const ASSISTANT_ID = 'asst_QtOk7Ym9O8r1Yzh3gWF9DYq5';
+  const API_KEY = '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';
+  const BASE = 'https://api.openai.com/v1';
+  const HEADERS = {'Content-Type':'application/json','Authorization':'Bearer '+API_KEY,'OpenAI-Beta':'assistants=v2'};
+
+  let threadId = null;
+  let isTyping = false;
+
+  const btn = document.getElementById('tm-chat-btn');
+  const box = document.getElementById('tm-chat-box');
+  const msgs = document.getElementById('tm-msgs');
+  const input = document.getElementById('tm-input');
+  const send = document.getElementById('tm-send');
+  const notif = document.getElementById('tm-chat-notif');
+
+  // Скрыть нотификацию через 5 сек
+  setTimeout(() => { if(notif) notif.style.display='none'; }, 5000);
+
+  btn.addEventListener('click', () => {
+    const isOpen = box.classList.toggle('open');
+    btn.classList.toggle('open');
+    if(notif) notif.style.display='none';
+    if(isOpen && !threadId) initThread();
+    if(isOpen) setTimeout(()=>input.focus(),300);
+  });
+
+  async function initThread(){
+    try {
+      addMsg('bot','👋 Привет! Я Илья, ассистент агентства Tandem Marketing.\n\nПомогу ответить на вопросы о таргетированной рекламе и рассказать как мы работаем. Спрашивайте! 😊');
+      const res = await fetch(BASE+'/threads', {method:'POST', headers:HEADERS, body:'{}'});
+      const data = await res.json();
+      threadId = data.id;
+    } catch(e) {
+      addMsg('bot','Упс, что-то пошло не так. Попробуйте позже или напишите нам в Instagram 🙏');
+    }
+  }
+
+  async function sendMsg(){
+    const text = input.value.trim();
+    if(!text || isTyping || !threadId) return;
+    input.value = '';
+    input.style.height = 'auto';
+    addMsg('user', text);
+    showTyping();
+    isTyping = true;
+    send.disabled = true;
+
+    try {
+      // Добавляем сообщение в тред
+      await fetch(BASE+'/threads/'+threadId+'/messages', {
+        method:'POST', headers:HEADERS,
+        body: JSON.stringify({role:'user', content:text})
+      });
+
+      // Запускаем ассистента
+      const runRes = await fetch(BASE+'/threads/'+threadId+'/runs', {
+        method:'POST', headers:HEADERS,
+        body: JSON.stringify({assistant_id: ASSISTANT_ID})
+      });
+      const run = await runRes.json();
+
+      // Поллинг статуса
+      let status = run.status;
+      let runId = run.id;
+      let attempts = 0;
+      while(status !== 'completed' && status !== 'failed' && attempts < 30){
+        await sleep(1000);
+        const poll = await fetch(BASE+'/threads/'+threadId+'/runs/'+runId, {headers:HEADERS});
+        const pollData = await poll.json();
+        status = pollData.status;
+        attempts++;
+      }
+
+      if(status === 'completed'){
+        const msgsRes = await fetch(BASE+'/threads/'+threadId+'/messages?limit=1&order=desc', {headers:HEADERS});
+        const msgsData = await msgsRes.json();
+        const reply = msgsData.data?.[0]?.content?.[0]?.text?.value || 'Не получил ответ, попробуйте ещё раз.';
+        hideTyping();
+        addMsg('bot', reply);
+      } else {
+        hideTyping();
+        addMsg('bot','Что-то пошло не так. Попробуйте переформулировать вопрос 🙏');
+      }
+    } catch(e) {
+      hideTyping();
+      addMsg('bot','Ошибка соединения. Проверьте интернет и попробуйте снова.');
+    }
+
+    isTyping = false;
+    send.disabled = false;
+    input.focus();
+  }
+
+  function addMsg(role, text){
+    const div = document.createElement('div');
+    div.className = 'tm-msg ' + role;
+    // Простой рендер переносов строк
+    div.innerHTML = text.replace(/\n/g,'<br>');
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  let typingEl = null;
+  function showTyping(){
+    typingEl = document.createElement('div');
+    typingEl.className = 'tm-typing';
+    typingEl.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(typingEl);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function hideTyping(){
+    if(typingEl){ typingEl.remove(); typingEl = null; }
+  }
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+  // Отправка по Enter (Shift+Enter — перенос)
+  input.addEventListener('keydown', e => {
+    if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMsg(); }
+  });
+  // Авторазмер textarea
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 80) + 'px';
+  });
+  send.addEventListener('click', sendMsg);
+})();
+</script>
 </body>
 </html>
