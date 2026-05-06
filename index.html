@@ -340,6 +340,18 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
   </div>
 </section>
 
+<!-- БЛОК: Остались вопросы -->
+<section style="background:var(--d2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:60px 5vw;text-align:center">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="stag" style="justify-content:center">Поддержка</div>
+    <h2 class="stitle">Остались <span>вопросы?</span></h2>
+    <p class="sdesc" style="margin:0 auto 32px">Илья — AI-ассистент агентства — ответит на любые вопросы прямо сейчас, в любое время суток.</p>
+    <button onclick="openTmChat()" class="btn-gold" style="border:none;cursor:pointer">
+      💬 Спросить Илью →
+    </button>
+  </div>
+</section>
+
 <div class="cta-band">
   <div class="cta-inner">
     <h2>Готовы к потоку клиентов?</h2>
@@ -423,6 +435,18 @@ footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid v
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
     });
   });
+
+  // Глобальная функция открытия чата (для кнопки "Остались вопросы?")
+  window.openTmChat = function() {
+    if (!box.classList.contains('open')) {
+      box.classList.add('open');
+      btn.classList.add('open');
+      if (notif) notif.style.display = 'none';
+      if (!threadId) initThread();
+      setTimeout(() => input.focus(), 300);
+    }
+    box.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
 })();
 </script>
 
