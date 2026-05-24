@@ -71,9 +71,8 @@ section{position:relative;z-index:1;padding:90px 5vw}
 
 /* ABOUT */
 .about{background:var(--d2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
-html,body{overflow-x:hidden;max-width:100%}
 .about-in{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
-@media(max-width:768px){.about-in{grid-template-columns:1fr;gap:40px}.img-wrap>div{padding:20px !important}}
+@media(max-width:768px){.about-in{grid-template-columns:1fr;gap:40px}}
 .img-wrap{position:relative}
 .img-ph{width:100%;border-radius:24px;aspect-ratio:4/5;background:var(--d3);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--mu)}
 .img-ph svg{width:56px;height:56px;opacity:.3;stroke:currentColor;fill:none;stroke-width:1.2}
@@ -328,7 +327,15 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
           </div>
         </div>
 
-        <!-- Ilya bot CTA removed - moved to FAQ -->
+        <!-- Ilya bot CTA -->
+        <div onclick="document.getElementById('tm-chat-btn').click()" style="cursor:pointer;background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.35);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:background .2s" onmouseover="this.style.background='rgba(255,107,43,.2)'" onmouseout="this.style.background='rgba(255,107,43,.1)'">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:#fff">И</div>
+          <div>
+            <div style="font-weight:700;font-size:.85rem;color:#fff;margin-bottom:3px">Остались вопросы? Спросите Илью 💬</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.6)">AI-ассистент ответит прямо сейчас</div>
+          </div>
+          <div style="margin-left:auto;color:var(--gold);font-size:1.2rem">→</div>
+        </div>
 
       </div>
     </div>
@@ -453,18 +460,8 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
     <details><summary>Это гарантированные результаты?</summary><div class="faq-body">Мы не можем давать гарантию на то, что зависит не только от нас. Мы приводим заявки — людей, которые сами написали вам. Общаться с ними и записывать на приём нужно будет вам. Именно поэтому мы обучаем обработке заявок и даём скрипты.</div></details>
     <details><summary>Как скоро будут первые заявки?</summary><div class="faq-body">Обычно заявки начинают поступать в течение первых суток после запуска рекламы.</div></details>
     <details><summary>Нужно ли вести страницу в Instagram?</summary><div class="faq-body">Только если вам это нравится. Заявки с нашей рекламы приходят напрямую в WhatsApp — многие клиенты вообще не заходят на страницу. Большинство наших клиентов страницу не ведут и получают стабильный поток клиентов каждую неделю.</div></details>
-    <details><summary>Сколько стоят ваши услуги?</summary><div class="faq-body">Ведение рекламы стоит $550 в месяц. Есть пробный период — $190 на две недели, чтобы вы могли оценить результат без долгосрочных обязательств. Рекламный бюджет оплачивается отдельно напрямую в Facebook (обычно $15–30 в день).</div></details>
+    <details><summary>Сколько стоят ваши услуги?</summary><div class="faq-body">Ведение рекламы стоит 1700 шекелей в месяц. Есть пробный период — 600 шекелей на две недели, чтобы вы могли оценить результат без долгосрочных обязательств. Рекламный бюджет оплачивается отдельно напрямую в Facebook.</div></details>
     <details><summary>Что входит в услугу?</summary><div class="faq-body">Рекламные тексты на русском и иврите, подбор идей под вашу нишу, монтаж 6 роликов, настройка рекламы, ежедневный мониторинг и оптимизация, скрипты для обработки заявок, поддержка с 10:00 до 19:00.</div></details>
-  </div>
-
-  <!-- Ilya CTA -->
-  <div onclick="document.getElementById('tm-chat-btn').click()" style="cursor:pointer;max-width:760px;margin:24px auto 0;background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.35);border-radius:16px;padding:18px 24px;display:flex;align-items:center;gap:16px;transition:background .2s" onmouseover="this.style.background='rgba(255,107,43,.2)'" onmouseout="this.style.background='rgba(255,107,43,.1)'">
-    <div style="width:46px;height:46px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff">И</div>
-    <div>
-      <div style="font-weight:700;font-size:.9rem;color:#fff;margin-bottom:3px">Не нашли ответ? Спросите Илью — нашего AI-ассистента 💬</div>
-      <div style="font-size:.75rem;color:rgba(255,255,255,.6)">Ответит на любой вопрос прямо сейчас, в любое время</div>
-    </div>
-    <div style="margin-left:auto;color:var(--gold);font-size:1.4rem;flex-shrink:0">→</div>
   </div>
 </section>
 
