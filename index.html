@@ -75,6 +75,16 @@ html,body{overflow-x:hidden;max-width:100%}
 .about-in{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
 @media(max-width:768px){.about-in{grid-template-columns:1fr;gap:40px}.img-wrap>div{padding:20px !important}}
 .img-wrap{position:relative}
+.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat-card{min-width:0;background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);border-radius:16px;padding:20px;text-align:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--gold);line-height:1;white-space:nowrap}
+.stat-num.long{font-size:2.1rem}
+.stat-label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:4px}
+@media(max-width:420px){.stat-card{padding:18px 10px}.stat-num{font-size:2.35rem}.stat-num.long{font-size:clamp(1.35rem,7.2vw,1.8rem)}.stat-label{font-size:.58rem;letter-spacing:.06em}}
+@media(max-width:340px){.stat-grid{grid-template-columns:1fr}}
+.platform-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.platform-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px}
+@media(max-width:420px){.platform-row{gap:10px}.platform-pill{padding:8px 10px}.platform-pill span{font-size:.68rem!important}}
 .img-ph{width:100%;border-radius:24px;aspect-ratio:4/5;background:var(--d3);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--mu)}
 .img-ph svg{width:56px;height:56px;opacity:.3;stroke:currentColor;fill:none;stroke-width:1.2}
 .img-ph p{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.45;text-align:center;line-height:1.6}
@@ -243,6 +253,8 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
 .flinks a{font-size:.84rem;color:var(--mu);text-decoration:none;transition:color var(--e)}
 .flinks a:hover{color:var(--gold)}
 .fbot{max-width:1100px;margin:28px auto 0;padding-top:22px;border-top:1px solid var(--bdim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.73rem;color:var(--mu)}
+@media(max-width:480px){nav{height:64px;padding:0 12px;gap:8px}.logo{gap:8px;min-width:0;flex:1}.logo img{width:38px!important;height:38px!important;flex:0 0 38px}.logo-txt{font-size:clamp(.95rem,4.8vw,1.16rem);letter-spacing:.05em;white-space:nowrap}.nav-cta{flex-shrink:0;padding:9px 13px;font-size:.68rem;letter-spacing:.04em}.hero{padding-left:4vw;padding-right:4vw}.hero h1{font-size:clamp(3rem,16vw,4rem)}.hero-stats{gap:22px;margin-top:44px}.sn{font-size:2.55rem}.sl{font-size:.68rem;max-width:112px}.hero-btns .btn-gold,.hero-btns .btn-ol{width:100%;justify-content:center;text-align:center}summary{padding:18px 16px;font-size:.86rem}.faq-body{padding:0 16px 18px}.ai-cta{padding:16px!important;gap:12px!important;align-items:flex-start!important}.ai-cta>div:nth-child(2){min-width:0}.ai-cta>div:last-child{display:none}#form>div:nth-of-type(2){padding:28px 18px!important;border-radius:20px!important}#submitBtn{padding:15px 18px!important;font-size:.78rem!important}.btn-dark{max-width:100%;justify-content:center;text-align:center}}
+@media(max-width:370px){.logo-txt{font-size:.98rem}.nav-cta{padding:9px 10px;font-size:.62rem}.logo img{width:34px!important;height:34px!important;flex-basis:34px}}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
 </style>
 </head>
@@ -286,41 +298,41 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
       <div style="width:100%;border-radius:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:36px;display:flex;flex-direction:column;gap:20px">
 
         <!-- Stats grid -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);border-radius:16px;padding:20px;text-align:center">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--gold);line-height:1">10</div>
-            <div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:4px">лет опыта</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-num">10</div>
+            <div class="stat-label">лет опыта</div>
           </div>
-          <div style="background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);border-radius:16px;padding:20px;text-align:center">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--gold);line-height:1">500+</div>
-            <div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:4px">клиентов</div>
+          <div class="stat-card">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">клиентов</div>
           </div>
-          <div style="background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);border-radius:16px;padding:20px;text-align:center">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--gold);line-height:1">15+</div>
-            <div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:4px">специалистов</div>
+          <div class="stat-card">
+            <div class="stat-num">15+</div>
+            <div class="stat-label">специалистов</div>
           </div>
-          <div style="background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);border-radius:16px;padding:20px;text-align:center">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:var(--gold);line-height:1">Ежедневно</div>
-            <div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:4px">на связи</div>
+          <div class="stat-card">
+            <div class="stat-num long">Ежедневно</div>
+            <div class="stat-label">на связи</div>
           </div>
         </div>
 
         <!-- Platform logos -->
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px 20px">
           <div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">Работаем с платформами</div>
-          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <div class="platform-row">
             <!-- Facebook -->
-            <div style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px">
+            <div class="platform-pill">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.5h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
               <span style="font-size:.72rem;font-weight:700;color:#fff">Facebook</span>
             </div>
             <!-- Instagram -->
-            <div style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px">
+            <div class="platform-pill">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="url(#ig)"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#FFDC80"/><stop offset="50%" style="stop-color:#E1306C"/><stop offset="100%" style="stop-color:#833AB4"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <span style="font-size:.72rem;font-weight:700;color:#fff">Instagram</span>
             </div>
             <!-- WhatsApp -->
-            <div style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px">
+            <div class="platform-pill">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               <span style="font-size:.72rem;font-weight:700;color:#fff">WhatsApp</span>
             </div>
@@ -457,7 +469,7 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
   </div>
 
   <!-- Ilya CTA -->
-  <div onclick="document.getElementById('tm-chat-btn').click()" style="cursor:pointer;max-width:760px;margin:24px auto 0;background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.35);border-radius:16px;padding:18px 24px;display:flex;align-items:center;gap:16px;transition:background .2s" onmouseover="this.style.background='rgba(255,107,43,.2)'" onmouseout="this.style.background='rgba(255,107,43,.1)'">
+  <div class="ai-cta" onclick="document.getElementById('tm-chat-btn').click()" style="cursor:pointer;max-width:760px;margin:24px auto 0;background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.35);border-radius:16px;padding:18px 24px;display:flex;align-items:center;gap:16px;transition:background .2s" onmouseover="this.style.background='rgba(255,107,43,.2)'" onmouseout="this.style.background='rgba(255,107,43,.1)'">
     <div style="width:46px;height:46px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff">И</div>
     <div>
       <div style="font-weight:700;font-size:.9rem;color:#fff;margin-bottom:3px">Не нашли ответ? Спросите Илью — нашего AI-ассистента 💬</div>
