@@ -635,7 +635,7 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
 .tm-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
 .tm-msgs::-webkit-scrollbar{width:4px}
 .tm-msgs::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
-.tm-msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.85rem;line-height:1.55;word-break:break-word;animation:msg-in .2s ease}
+.tm-msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.85rem;line-height:1.55;word-break:break-word;white-space:pre-line;animation:msg-in .2s ease}
 @keyframes msg-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .tm-msg.bot{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);color:#fff;border-bottom-left-radius:4px;align-self:flex-start}
 .tm-msg.user{background:var(--gold);color:#fff;border-bottom-right-radius:4px;align-self:flex-end;font-weight:600}
@@ -685,11 +685,53 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
 
 <script>
 (function(){
-  const ASSISTANT_ID = 'asst_QtOk7Ym9O8r1Yzh3gWF9DYq5';
   const BASE = 'https://lively-leaf-170c.ivankovalenqa.workers.dev';
-  const HEADERS = {'Content-Type':'application/json','OpenAI-Beta':'assistants=v2'};
+  const MODEL = 'gpt-5.6-luna';
+  const HEADERS = {'Content-Type':'application/json'};
+  const SYSTEM_PROMPT = `
+Ты — Илья, AI-ассистент маркетингового агентства ZapuskMarketing. Ты общаешься с потенциальными клиентами на сайте агентства.
 
-  let threadId = null;
+Цель диалога: коротко и по делу отвечать на вопросы о таргетированной рекламе, объяснять как работает ZapuskMarketing и мягко вести человека к заявке на сайте.
+
+О компании:
+ZapuskMarketing — команда с 10-летним опытом в таргетированной рекламе Instagram и Facebook Ads. Работаем с нишами услуг: массаж, бьюти-сфера, грузоперевозки, курсы и мастер-классы.
+
+Что обещаем осторожно:
+- обычно клиент получает 20–30 новых обращений в месяц;
+- на рекламном бюджете $15–30 в день можно получать стабильный поток заявок;
+- в первый месяц результат обычно ниже, потому что реклама набирает обороты;
+- продажи зависят от ниши, оффера, цены, скорости ответа и обработки заявок;
+- не давай гарантию конкретных цифр, говори "обычно", "в среднем", "как правило".
+
+Что входит в услугу:
+- рекламные тексты на русском или языке аудитории клиента;
+- подбор идей под нишу;
+- 6 смонтированных роликов для тестирования;
+- настройка рекламы в Facebook и Instagram;
+- ежедневный мониторинг и оптимизация;
+- скрипты для обработки заявок и обучение;
+- поддержка с 10:00 до 19:00.
+
+Стоимость:
+- $550 в месяц;
+- пробный период $190 за 2 недели;
+- рекламный бюджет оплачивается отдельно напрямую в Facebook, обычно $15–30 в день;
+- возможна оплата частями раз в две недели.
+
+Правила общения:
+1. Всегда сначала ответь на вопрос клиента, только потом предложи оставить заявку.
+2. Отвечай коротко, дружелюбно и без длинных текстов.
+3. Общайся на языке клиента: русский, иврит или английский.
+4. Если вопрос не по теме, аккуратно верни разговор к рекламе и заявке.
+5. Не придумывай информацию. Если не знаешь, скажи, что лучше уточнить у менеджера.
+6. Никогда не проси имя и телефон в чате. Направляй к форме на сайте.
+
+Фраза в конце, когда уместно: "Если хотите обсудить вашу ситуацию лично — оставьте заявку чуть ниже на странице, менеджер свяжется с вами."
+Если клиент уже заполнил форму: "Отлично! Менеджер свяжется с вами в ближайшее время."
+`.trim();
+
+  let previousResponseId = null;
+  let chatStarted = false;
   let isTyping = false;
 
   const btn = document.getElementById('tm-chat-btn');
@@ -706,24 +748,19 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
     const isOpen = box.classList.toggle('open');
     btn.classList.toggle('open');
     if(notif) notif.style.display='none';
-    if(isOpen && !threadId) initThread();
+    if(isOpen && !chatStarted) startChat();
     if(isOpen) setTimeout(()=>input.focus(),300);
   });
 
-  async function initThread(){
-    try {
-      addMsg('bot','👋 Привет! Я Илья, ассистент агентства ZapuskMarketing.\n\nПомогу ответить на вопросы о таргетированной рекламе и рассказать как мы работаем. Спрашивайте! 😊');
-      const res = await fetch(BASE+'/v1/threads', {method:'POST', headers:HEADERS, body:'{}'});
-      const data = await res.json();
-      threadId = data.id;
-    } catch(e) {
-      addMsg('bot','Упс, что-то пошло не так. Попробуйте позже или напишите нам в Instagram 🙏');
-    }
+  function startChat(){
+    chatStarted = true;
+    addMsg('bot','👋 Привет! Я Илья, ассистент агентства ZapuskMarketing.\n\nПомогу ответить на вопросы о таргетированной рекламе и рассказать как мы работаем. Спрашивайте! 😊');
   }
 
   async function sendMsg(){
     const text = input.value.trim();
-    if(!text || isTyping || !threadId) return;
+    if(!text || isTyping) return;
+    if(!chatStarted) startChat();
     input.value = '';
     input.style.height = 'auto';
     addMsg('user', text);
@@ -732,35 +769,26 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
     send.disabled = true;
 
     try {
-      // Добавляем сообщение в тред
-      await fetch(BASE+'/v1/threads/'+threadId+'/messages', {
+      const payload = {
+        model: MODEL,
+        instructions: SYSTEM_PROMPT,
+        input: [{role:'user', content:text}],
+        previous_response_id: previousResponseId || undefined,
+        max_output_tokens: 350,
+        store: true
+      };
+
+      const res = await fetch(BASE+'/v1/responses', {
         method:'POST', headers:HEADERS,
-        body: JSON.stringify({role:'user', content:text})
+        body: JSON.stringify(payload)
       });
 
-      // Запускаем ассистента
-      const runRes = await fetch(BASE+'/v1/threads/'+threadId+'/runs', {
-        method:'POST', headers:HEADERS,
-        body: JSON.stringify({assistant_id: ASSISTANT_ID})
-      });
-      const run = await runRes.json();
+      const data = await res.json();
+      if(!res.ok || data.error) throw new Error(data.error?.message || 'AI request failed');
 
-      // Поллинг статуса
-      let status = run.status;
-      let runId = run.id;
-      let attempts = 0;
-      while(status !== 'completed' && status !== 'failed' && attempts < 30){
-        await sleep(1000);
-        const poll = await fetch(BASE+'/v1/threads/'+threadId+'/runs/'+runId, {headers:HEADERS});
-        const pollData = await poll.json();
-        status = pollData.status;
-        attempts++;
-      }
-
-      if(status === 'completed'){
-        const msgsRes = await fetch(BASE+'/v1/threads/'+threadId+'/messages?limit=1&order=desc', {headers:HEADERS});
-        const msgsData = await msgsRes.json();
-        const reply = msgsData.data?.[0]?.content?.[0]?.text?.value || 'Не получил ответ, попробуйте ещё раз.';
+      const reply = extractReply(data);
+      if(reply){
+        previousResponseId = data.id || previousResponseId;
         hideTyping();
         addMsg('bot', reply);
       } else {
@@ -768,8 +796,9 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
         addMsg('bot','Что-то пошло не так. Попробуйте переформулировать вопрос 🙏');
       }
     } catch(e) {
+      console.error('AI chat error:', e);
       hideTyping();
-      addMsg('bot','Ошибка соединения. Проверьте интернет и попробуйте снова.');
+      addMsg('bot','Упс, что-то пошло не так. Попробуйте позже или оставьте заявку на сайте — менеджер свяжется с вами.');
     }
 
     isTyping = false;
@@ -780,10 +809,22 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
   function addMsg(role, text){
     const div = document.createElement('div');
     div.className = 'tm-msg ' + role;
-    // Простой рендер переносов строк
-    div.innerHTML = text.replace(/\n/g,'<br>');
+    div.textContent = text;
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function extractReply(data){
+    if(typeof data.output_text === 'string' && data.output_text.trim()) return data.output_text.trim();
+
+    const parts = [];
+    (data.output || []).forEach(item => {
+      (item.content || []).forEach(content => {
+        if(content.type === 'output_text' && content.text) parts.push(content.text);
+        if(content.type === 'text' && content.text) parts.push(content.text);
+      });
+    });
+    return parts.join('\n').trim();
   }
 
   let typingEl = null;
@@ -797,9 +838,6 @@ footer{position:relative;z-index:1;background:rgba(0,0,0,.2);border-top:1px soli
   function hideTyping(){
     if(typingEl){ typingEl.remove(); typingEl = null; }
   }
-
-  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
   // Отправка по Enter (Shift+Enter — перенос)
   input.addEventListener('keydown', e => {
     if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMsg(); }
